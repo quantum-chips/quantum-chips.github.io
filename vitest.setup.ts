@@ -5,14 +5,3 @@ import "@testing-library/jest-dom/vitest";
 HTMLCanvasElement.prototype.getContext = ((id: string) =>
   id === "2d" ? { fillRect: () => {}, clearRect: () => {} } : null
 ) as unknown as typeof HTMLCanvasElement.prototype.getContext;
-
-// matchMedia stub: framer-motion's useReducedMotion() calls window.matchMedia which jsdom
-// does not implement. matches:false means useReducedMotion() returns false (motion enabled).
-Object.defineProperty(window, "matchMedia", {
-  writable: true,
-  value: (query: string) => ({
-    matches: false, media: query, onchange: null,
-    addEventListener: () => {}, removeEventListener: () => {},
-    addListener: () => {}, removeListener: () => {}, dispatchEvent: () => false,
-  }),
-});

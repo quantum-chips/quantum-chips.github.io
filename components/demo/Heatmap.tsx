@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { generateEmHeatmap, computeVerdict, type ChipId } from "@/lib/sidechannel-sim";
 import { heatColor } from "@/lib/colorRamp";
 
@@ -7,8 +7,8 @@ const CELL = 14; // px per grid cell
 
 export default function Heatmap({ chip, traceCount }: { chip: ChipId; traceCount: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const map = generateEmHeatmap(chip, traceCount);
-  const verdict = computeVerdict(chip, traceCount);
+  const map = useMemo(() => generateEmHeatmap(chip, traceCount), [chip, traceCount]);
+  const verdict = useMemo(() => computeVerdict(chip, traceCount), [chip, traceCount]);
   const W = map.cols * CELL;
   const H = map.rows * CELL;
 
@@ -21,7 +21,7 @@ export default function Heatmap({ chip, traceCount }: { chip: ChipId; traceCount
         ctx.fillRect(x * CELL, y * CELL, CELL, CELL);
       }
     }
-  }, [map, chip, traceCount]);
+  }, [map]);
 
   const core = map.cryptoCore;
   const showBox = chip === "A" && verdict.recovered;

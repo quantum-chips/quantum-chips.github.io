@@ -1,11 +1,11 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { generateCpaMatrix, type ChipId } from "@/lib/sidechannel-sim";
 import { heatColor } from "@/lib/colorRamp";
 
 export default function CpaMatrix({ chip, traceCount }: { chip: ChipId; traceCount: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const r = generateCpaMatrix(chip, traceCount);
+  const r = useMemo(() => generateCpaMatrix(chip, traceCount), [chip, traceCount]);
   const cw = 5;
   const ch = 6;
   const W = r.samples * cw;
@@ -20,7 +20,7 @@ export default function CpaMatrix({ chip, traceCount }: { chip: ChipId; traceCou
         ctx.fillRect(s * cw, h * ch, cw, ch);
       }
     }
-  }, [r, chip, traceCount]);
+  }, [r]);
 
   return (
     <figure className="border border-hairline">

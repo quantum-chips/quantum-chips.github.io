@@ -21,6 +21,18 @@ body {
 
 :focus-visible { outline: 2px solid #0E7C86; outline-offset: 2px; }
 
+/* Hero heat-sweep (HeroVisual): translates across the 0 0 480 480 viewBox. */
+@keyframes heat-sweep {
+  from { transform: translateX(-192px); }
+  to { transform: translateX(480px); }
+}
+.heat-sweep {
+  transform-box: view-box;
+  animation: heat-sweep 3.5s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  /* Hold the sweep at a sensible static position instead of freezing off-screen. */
+  .heat-sweep { animation: none; transform: translateX(144px); }
 }
