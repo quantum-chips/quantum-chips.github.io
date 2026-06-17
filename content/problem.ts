@@ -4,8 +4,8 @@ export const PROBLEM_SECTIONS: { heading: string; body: string }[] = [
     body: "Shor's algorithm lets a large fault-tolerant quantum computer factor integers and compute discrete logarithms efficiently — breaking RSA, Diffie-Hellman, and elliptic-curve cryptography, the public-key schemes behind nearly all secure communication today.",
   },
   {
-    heading: 'Why "when" matters less than you think',
-    body: 'Estimates for a cryptographically-relevant quantum computer cluster around ten to fifteen years, with a long tail of uncertainty. But the threat is already live: in a "harvest now, decrypt later" attack, an adversary records encrypted traffic today and decrypts it once the hardware exists. Any secret with a long shelf life is already exposed.',
+    heading: "Why “when” matters less than you think",
+    body: "Estimates for a cryptographically-relevant quantum computer cluster around ten to fifteen years, with a long tail of uncertainty. But the threat is already live: in a “harvest now, decrypt later” attack, an adversary records encrypted traffic today and decrypts it once the hardware exists. Any secret with a long shelf life is already exposed.",
   },
   {
     heading: "Post-quantum cryptography moves the problem to the chip",
