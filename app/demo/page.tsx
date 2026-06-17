@@ -16,7 +16,7 @@ function posToTraces(pos: number): number {
 
 export default function Demo() {
   const [chip, setChip] = useState<ChipId>("A");
-  const [pos, setPos] = useState(40); // ~2,500 traces
+  const [pos, setPos] = useState(57); // ~2,600 traces (just past recovery)
   const traceCount = posToTraces(pos);
 
   return (

@@ -24,7 +24,7 @@ export default function Heatmap({ chip, traceCount }: { chip: ChipId; traceCount
   }, [map, chip, traceCount]);
 
   const core = map.cryptoCore;
-  const showBox = chip === "A" && verdict.confidence > 0.3;
+  const showBox = chip === "A" && verdict.recovered;
 
   return (
     <figure className="relative inline-block border border-hairline">

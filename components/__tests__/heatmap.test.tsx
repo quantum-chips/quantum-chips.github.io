@@ -13,4 +13,8 @@ describe("Heatmap", () => {
     render(<Heatmap chip="B" traceCount={1000000} />);
     expect(screen.queryByText(/LEAK/i, { selector: "text" })).not.toBeInTheDocument();
   });
+  it("chip A below the recovery threshold shows no leak box", () => {
+    render(<Heatmap chip="A" traceCount={1000} />);
+    expect(screen.queryByText(/LEAK/i, { selector: "text" })).not.toBeInTheDocument();
+  });
 });
