@@ -7,6 +7,9 @@ describe("computeVerdict", () => {
     expect(v.recovered).toBe(false);
     expect(v.status).toBe("pending");
   });
+  it("chip A pending has null tracesToRecover", () => {
+    expect(computeVerdict("A", 100).tracesToRecover).toBeNull();
+  });
   it("chip A recovers the key past the threshold", () => {
     const v = computeVerdict("A", TRACES_TO_RECOVER_A + 500);
     expect(v.recovered).toBe(true);

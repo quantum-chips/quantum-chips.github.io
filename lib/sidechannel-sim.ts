@@ -28,7 +28,7 @@ export function computeVerdict(chip: ChipId, traceCount: number): Verdict {
   const recovered = traceCount >= TRACES_TO_RECOVER_A;
   return {
     recovered,
-    tracesToRecover: recovered ? TRACES_TO_RECOVER_A : TRACES_TO_RECOVER_A,
+    tracesToRecover: recovered ? TRACES_TO_RECOVER_A : null,
     confidence,
     status: recovered ? "leak" : "pending",
   };
