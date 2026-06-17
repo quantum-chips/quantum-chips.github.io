@@ -6,11 +6,11 @@ describe("Heatmap", () => {
   it("renders an accessible canvas and a CV confidence label for a leaking chip", () => {
     render(<Heatmap chip="A" traceCount={50000} />);
     expect(screen.getByRole("img", { name: /electromagnetic leakage/i })).toBeInTheDocument();
-    expect(screen.getByText(/LEAK/i)).toBeInTheDocument();
-    expect(screen.getByText(/0\.\d\d/)).toBeInTheDocument(); // confidence like 0.99
+    expect(screen.getByText(/LEAK/i, { selector: "text" })).toBeInTheDocument();
+    expect(screen.getByText(/[01]\.\d\d/)).toBeInTheDocument(); // confidence like 0.99 or 1.00
   });
   it("does not assert a leak for the masked chip", () => {
     render(<Heatmap chip="B" traceCount={1000000} />);
-    expect(screen.queryByText(/LEAK/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/LEAK/i, { selector: "text" })).not.toBeInTheDocument();
   });
 });

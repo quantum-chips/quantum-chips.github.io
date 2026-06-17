@@ -49,12 +49,12 @@ export default function Heatmap({ chip, traceCount }: { chip: ChipId; traceCount
             strokeDasharray="4 3"
           />
           <text x={core.x * CELL} y={core.y * CELL - 4} fill="#FCFFA4" className="font-mono" fontSize="11">
-            LEAK · crypto core · {Math.min(verdict.confidence, 0.99).toFixed(2)}
+            LEAK · crypto core · {verdict.confidence.toFixed(2)}
           </text>
         </svg>
       )}
       <figcaption className="border-t border-hairline bg-paper px-2 py-1 font-mono text-[10px] text-graphite">
-        EM spatial map {showBox ? "· CV hotspot detected" : "· no hotspot"}
+        EM spatial leakage {showBox ? "· CV hotspot detected" : "· no hotspot"}
       </figcaption>
     </figure>
   );
