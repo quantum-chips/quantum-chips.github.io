@@ -56,7 +56,7 @@ export default function Demo() {
               max={100}
               value={pos}
               onChange={(e) => setPos(Number(e.target.value))}
-              aria-label="Number of traces captured"
+              aria-label="Traces captured"
               className="accent-instrument"
             />
           </label>

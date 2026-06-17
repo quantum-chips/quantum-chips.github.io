@@ -8,7 +8,7 @@ export default function Problem() {
       <Container className="py-20">
         <Eyebrow index="02">The problem</Eyebrow>
         <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-tight">
-          Quantum computing breaks today's cryptography. The fix has to reach the chip.
+          Quantum computing breaks today&apos;s cryptography. The fix has to reach the chip.
         </h1>
         <div className="mt-12 grid gap-12">
           {PROBLEM_SECTIONS.map((s, i) => (
