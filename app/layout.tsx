@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { fontVars } from "@/lib/fonts";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Quantum-Safe Silicon — Testing chips against the quantum threat",
@@ -11,7 +13,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={fontVars}>
-      <body>{children}</body>
+      <body>
+        <Nav />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
