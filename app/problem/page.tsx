@@ -7,7 +7,7 @@ export default function Problem() {
     <main>
       <Container className="py-20">
         <Eyebrow index="02">The problem</Eyebrow>
-        <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-tight">
+        <h1 className="mt-5 max-w-3xl text-balance font-display text-4xl font-bold leading-[1.1] tracking-tight md:text-5xl">
           Quantum computing breaks today&apos;s cryptography. The fix has to reach the chip.
         </h1>
         <div className="mt-12 grid gap-12">

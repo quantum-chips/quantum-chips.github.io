@@ -28,18 +28,18 @@ export default function Demo() {
             ⚠ Illustrative simulation
           </span>
         </div>
-        <h1 className="mt-4 font-display text-4xl font-bold">Watch a key leak — or hold.</h1>
+        <h1 className="mt-5 text-balance font-display text-4xl font-bold tracking-tight md:text-5xl">Watch a key leak — or hold.</h1>
 
         {/* Controls */}
-        <div className="mt-8 grid gap-6 border border-hairline p-6 md:grid-cols-[auto_1fr] md:items-center">
+        <div className="mt-8 grid gap-6 border border-hairline/70 bg-surface p-6 shadow-card md:grid-cols-[auto_1fr] md:items-center">
           <div className="flex gap-2" role="group" aria-label="Select chip under test">
             {(["A", "B"] as ChipId[]).map((c) => (
               <button
                 key={c}
                 onClick={() => setChip(c)}
                 aria-pressed={chip === c}
-                className={`border px-4 py-2 font-mono text-sm ${
-                  chip === c ? "border-instrument bg-instrument text-paper" : "border-hairline text-graphite"
+                className={`border px-4 py-2 font-mono text-sm transition-colors duration-200 ${
+                  chip === c ? "border-instrument bg-instrument text-paper" : "border-hairline text-graphite hover:border-graphite hover:text-ink"
                 }`}
               >
                 Chip {c} — {c === "A" ? "unprotected" : "masked"}

@@ -1,8 +1,8 @@
 export default function StatCard({ value, label }: { value: string; label: string }) {
   return (
-    <div className="border border-hairline bg-white/40 p-5">
-      <div className="font-display text-2xl font-bold text-ink">{value}</div>
-      <p className="mt-2 text-sm leading-snug text-graphite">{label}</p>
+    <div className="border border-hairline/70 bg-surface p-6 shadow-card transition-shadow duration-300 hover:shadow-none">
+      <div className="font-display text-3xl font-bold tracking-tight text-ink [font-variant-numeric:tabular-nums]">{value}</div>
+      <p className="mt-3 text-sm leading-relaxed text-graphite">{label}</p>
     </div>
   );
 }

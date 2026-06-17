@@ -10,35 +10,52 @@ export default function Home() {
   return (
     <main>
       <section className="relative overflow-hidden border-b border-hairline">
-        <div className="graph-paper absolute inset-0 opacity-40" aria-hidden />
-        <Container className="relative grid gap-10 py-24 md:grid-cols-2 md:items-center">
+        <div
+          className="graph-paper absolute inset-0 opacity-30 [mask-image:radial-gradient(120%_90%_at_70%_30%,#000,transparent)]"
+          aria-hidden
+        />
+        <Container className="relative grid items-center gap-12 py-28 md:grid-cols-[1.05fr_0.95fr] md:py-36">
           <div>
             <Eyebrow index={HERO.eyebrow.split(" · ")[0]}>{HERO.eyebrow.split(" · ")[1]}</Eyebrow>
-            <h1 className="mt-4 font-display text-4xl font-bold leading-tight md:text-5xl">{HERO.title}</h1>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-graphite">{HERO.lede}</p>
+            <h1 className="mt-5 text-balance font-display text-5xl font-bold leading-[1.04] tracking-tight md:text-6xl">
+              {HERO.title}
+            </h1>
+            <p className="mt-6 max-w-md text-pretty text-lg leading-relaxed text-graphite">{HERO.lede}</p>
             <Link
               href={HERO.cta.href}
-              className="mt-8 inline-block border border-instrument px-5 py-3 font-mono text-sm text-instrument hover:bg-instrument hover:text-paper"
+              className="group mt-9 inline-flex items-center gap-2.5 border border-instrument px-6 py-3 font-mono text-sm text-instrument transition-colors duration-200 hover:bg-instrument hover:text-paper"
             >
-              {HERO.cta.label} →
+              {HERO.cta.label}
+              <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-1">→</span>
             </Link>
           </div>
-          <HeroVisual />
+          <figure className="m-0">
+            <div className="border border-hairline bg-surface p-3 shadow-card">
+              <HeroVisual />
+            </div>
+            <figcaption className="mt-3 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.2em] text-graphite">
+              <span>Fig.01 — lattice / EM sweep</span>
+              <span className="flex items-center gap-1.5 text-instrument">
+                <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-instrument" />
+                live
+              </span>
+            </figcaption>
+          </figure>
         </Container>
       </section>
 
-      <Container className="py-20">
+      <Container className="py-24">
         <Eyebrow index="02">The problem</Eyebrow>
-        <div className="mt-6 grid gap-4 sm:grid-cols-3">
+        <div className="mt-8 grid gap-5 sm:grid-cols-3">
           {PROBLEM_STATS.map((s) => (
             <StatCard key={s.label} value={s.value} label={s.label} />
           ))}
         </div>
       </Container>
 
-      <Container className="py-20">
+      <Container className="py-24">
         <Eyebrow index="03">How we test</Eyebrow>
-        <div className="mt-6">
+        <div className="mt-8">
           <StepFlow />
         </div>
       </Container>

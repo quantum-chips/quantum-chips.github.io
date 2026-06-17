@@ -6,6 +6,7 @@ const config: Config = {
     extend: {
       colors: {
         paper: "#F6F5F1",
+        surface: "#FBFAF8",
         ink: "#14171C",
         graphite: "#5C6672",
         hairline: "#D9D7CF",
@@ -15,6 +16,12 @@ const config: Config = {
         display: ["var(--font-display)", "system-ui", "sans-serif"],
         body: ["var(--font-body)", "Georgia", "serif"],
         mono: ["var(--font-mono)", "monospace"],
+      },
+      boxShadow: {
+        card: "0 1px 2px rgba(20,23,28,0.04), 0 14px 30px -18px rgba(20,23,28,0.18)",
+      },
+      letterSpacing: {
+        tightish: "-0.02em",
       },
     },
   },

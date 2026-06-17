@@ -7,7 +7,7 @@ export default function Resources() {
     <main>
       <Container className="py-20">
         <Eyebrow index="06">Background & resources</Eyebrow>
-        <h1 className="mt-4 font-display text-4xl font-bold">Milestones & reading</h1>
+        <h1 className="mt-5 font-display text-4xl font-bold tracking-tight md:text-5xl">Milestones &amp; reading</h1>
 
         <h2 className="mt-12 font-display text-2xl font-semibold">Field milestones</h2>
         <ol className="mt-6 border-l border-hairline">
@@ -23,8 +23,8 @@ export default function Resources() {
         <h2 className="mt-12 font-display text-2xl font-semibold">Selected reading</h2>
         <ul className="mt-6 grid gap-3">
           {READING.map((r) => (
-            <li key={r.href} className="border border-hairline p-4">
-              <a href={r.href} target="_blank" rel="noopener noreferrer" className="font-medium text-instrument hover:underline">
+            <li key={r.href} className="border border-hairline/70 bg-surface p-4 shadow-card transition-shadow duration-300 hover:shadow-none">
+              <a href={r.href} target="_blank" rel="noopener noreferrer" className="font-medium text-instrument underline-offset-4 hover:underline">
                 {r.title}
               </a>
               <span className="ml-2 font-mono text-xs text-graphite">— {r.where}</span>

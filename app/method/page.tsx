@@ -14,7 +14,7 @@ export default function Method() {
     <main>
       <Container className="py-20">
         <Eyebrow index="04">Methodology</Eyebrow>
-        <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-tight">
+        <h1 className="mt-5 max-w-3xl text-balance font-display text-4xl font-bold leading-[1.1] tracking-tight md:text-5xl">
           From raw traces to a security verdict.
         </h1>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-graphite">

@@ -11,14 +11,18 @@ const LINKS = [
 
 export default function Nav() {
   return (
-    <header className="sticky top-0 z-40 border-b border-hairline bg-paper/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-hairline/80 bg-paper/70 backdrop-blur-md">
       <Container className="flex h-16 items-center justify-between">
-        <Link href="/" className="font-display text-lg font-bold tracking-tight">
+        <Link href="/" className="font-display text-lg font-bold tracking-tight transition-opacity hover:opacity-70">
           Quantum-Safe<span className="text-instrument">·</span>Silicon
         </Link>
-        <nav className="flex gap-6 font-mono text-sm">
+        <nav className="flex flex-wrap justify-end gap-x-6 gap-y-1 font-mono text-[13px]">
           {LINKS.map((l) => (
-            <Link key={l.href} href={l.href} className="text-graphite hover:text-ink">
+            <Link
+              key={l.href}
+              href={l.href}
+              className="text-graphite transition-colors duration-200 hover:text-ink"
+            >
               {l.label}
             </Link>
           ))}
