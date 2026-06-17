@@ -3,6 +3,7 @@ import Container from "@/components/Container";
 import Eyebrow from "@/components/Eyebrow";
 import StatCard from "@/components/StatCard";
 import StepFlow from "@/components/StepFlow";
+import HeroVisual from "@/components/HeroVisual";
 import { HERO, PROBLEM_STATS } from "@/content/site";
 
 export default function Home() {
@@ -22,11 +23,7 @@ export default function Home() {
               {HERO.cta.label} →
             </Link>
           </div>
-          <div
-            className="aspect-square w-full border border-hairline bg-gradient-to-br from-[#180F3E] via-[#7B2382] to-[#F6A21E]"
-            aria-label="Lattice over a chip die with a side-channel heat sweep (placeholder for animated hero)"
-            role="img"
-          />
+          <HeroVisual />
         </Container>
       </section>
 
