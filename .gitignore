@@ -9,3 +9,6 @@ next-env.d.ts
 
 # generated screenshots
 screenshots/
+
+# static export output
+out/
