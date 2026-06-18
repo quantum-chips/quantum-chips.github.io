@@ -6,7 +6,7 @@ import Heatmap from "@/components/demo/Heatmap";
 import CpaMatrix from "@/components/demo/CpaMatrix";
 import TraceViewer from "@/components/demo/TraceViewer";
 import VerdictPanel from "@/components/demo/VerdictPanel";
-import { computeVerdict, type ChipId, type Algorithm } from "@/lib/sidechannel-sim";
+import { computeVerdict, recoveryThreshold, type ChipId, type Algorithm } from "@/lib/sidechannel-sim";
 
 // Slider position 0..100 -> trace count on a log scale up to 1e6.
 function posToTraces(pos: number): number {
@@ -184,7 +184,14 @@ export default function Demo() {
                 <span className={`flex items-center gap-2 border ${tone} px-3 py-2`}>
                   <span className="font-mono text-[11px] text-uqpurple">{s.n}</span>
                   <span className="font-mono text-xs uppercase tracking-wide">{s.name}</span>
-                  {isVerdict && <span className="font-mono text-[10px] uppercase">· {verdictWord}</span>}
+                  {isVerdict && (
+                    <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase">
+                      {verdict.status === "pending" && (
+                        <span aria-hidden className="h-1.5 w-1.5 animate-pulse rounded-full bg-current" />
+                      )}
+                      {verdictWord}
+                    </span>
+                  )}
                 </span>
               );
               return (
@@ -241,6 +248,42 @@ export default function Demo() {
             <span className="text-uqpurple">05</span> Verdict
           </div>
           <VerdictPanel chip={chip} traceCount={traceCount} algo={algo} />
+        </div>
+
+        {/* Side-by-side: both algorithms at the current chip & trace count */}
+        <div className="mt-14">
+          <div className="flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.22em] text-graphite">
+            <span aria-hidden className="h-px w-7 bg-uqpurple/70" />
+            Two algorithms, side by side
+          </div>
+          <p className="mt-3 max-w-2xl text-pretty leading-relaxed text-graphite">
+            The same chip and trace count, run against each algorithm. They leak from different regions of
+            the die and recover at different speeds.
+          </p>
+          <div className="mt-6 grid gap-6 md:grid-cols-2">
+            {(["ML-KEM", "ML-DSA"] as Algorithm[]).map((a) => {
+              const v = computeVerdict(chip, traceCount, a);
+              const word = v.status === "leak" ? "key recovered" : v.status === "secure" ? "secure" : "analysing";
+              const tone =
+                v.status === "leak" ? "text-[#D44842]" : v.status === "secure" ? "text-instrument" : "text-white/55";
+              return (
+                <div key={a} className="overflow-hidden border border-ink/15 bg-[#0C1116] shadow-card">
+                  <div className="flex items-center justify-between border-b border-white/10 px-3 py-2 font-mono text-[11px] uppercase tracking-widest text-white/55">
+                    <span>
+                      <span className="text-uqpurple">{a}</span> · {a === "ML-KEM" ? "key exchange" : "signatures"}
+                    </span>
+                    <span className="text-instrument">recovers at {recoveryThreshold(a).toLocaleString()}</span>
+                  </div>
+                  <div className="p-4">
+                    <Heatmap chip={chip} traceCount={traceCount} algo={a} />
+                  </div>
+                  <div className={`border-t border-white/10 px-3 py-2 font-mono text-[10px] uppercase ${tone}`}>
+                    {word} · conf {v.confidence.toFixed(2)}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </Container>
     </main>

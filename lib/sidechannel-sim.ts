@@ -59,6 +59,11 @@ export function signalLevel(chip: ChipId, traceCount: number, algo: Algorithm = 
   return 1 - Math.exp(-n / ALGO_CONFIG[algo].recover);
 }
 
+// Traces needed to recover the key on the unprotected chip, per algorithm.
+export function recoveryThreshold(algo: Algorithm = "ML-KEM"): number {
+  return ALGO_CONFIG[algo].recover;
+}
+
 export interface Verdict {
   recovered: boolean;
   tracesToRecover: number | null;
