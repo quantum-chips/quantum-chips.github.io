@@ -28,7 +28,7 @@ export default function Demo() {
             ⚠ Illustrative simulation
           </span>
         </div>
-        <h1 className="mt-5 text-balance font-display text-4xl font-bold tracking-tight md:text-5xl">Watch a key leak — or hold.</h1>
+        <h1 className="mt-5 text-balance font-display text-4xl font-bold tracking-tight md:text-5xl">See which chip leaks its key.</h1>
 
         {/* Controls */}
         <div className="mt-8 grid gap-6 border border-hairline/70 bg-surface p-6 shadow-card md:grid-cols-[auto_1fr] md:items-center">
