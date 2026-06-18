@@ -5,7 +5,7 @@ import Resources from "@/app/resources/page";
 describe("Resources page", () => {
   it("renders the NIST 2024 milestone", () => {
     render(<Resources />);
-    expect(screen.getByText(/FIPS 203/)).toBeInTheDocument();
+    expect(screen.getAllByText(/FIPS 203/).length).toBeGreaterThan(0);
   });
   it("renders external reading links", () => {
     render(<Resources />);
