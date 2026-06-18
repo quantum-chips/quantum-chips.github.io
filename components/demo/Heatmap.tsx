@@ -1,14 +1,22 @@
 "use client";
 import { useEffect, useMemo, useRef } from "react";
-import { generateEmHeatmap, computeVerdict, type ChipId } from "@/lib/sidechannel-sim";
+import { generateEmHeatmap, computeVerdict, type ChipId, type Algorithm } from "@/lib/sidechannel-sim";
 import { heatColor } from "@/lib/colorRamp";
 
 const CELL = 14; // px per grid cell (intrinsic resolution)
 
-export default function Heatmap({ chip, traceCount }: { chip: ChipId; traceCount: number }) {
+export default function Heatmap({
+  chip,
+  traceCount,
+  algo = "ML-KEM",
+}: {
+  chip: ChipId;
+  traceCount: number;
+  algo?: Algorithm;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const map = useMemo(() => generateEmHeatmap(chip, traceCount), [chip, traceCount]);
-  const verdict = useMemo(() => computeVerdict(chip, traceCount), [chip, traceCount]);
+  const map = useMemo(() => generateEmHeatmap(chip, traceCount, undefined, algo), [chip, traceCount, algo]);
+  const verdict = useMemo(() => computeVerdict(chip, traceCount, algo), [chip, traceCount, algo]);
   const W = map.cols * CELL;
   const H = map.rows * CELL;
 

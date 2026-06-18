@@ -1,7 +1,15 @@
-import { computeVerdict, type ChipId } from "@/lib/sidechannel-sim";
+import { computeVerdict, type ChipId, type Algorithm } from "@/lib/sidechannel-sim";
 
-export default function VerdictPanel({ chip, traceCount }: { chip: ChipId; traceCount: number }) {
-  const v = computeVerdict(chip, traceCount);
+export default function VerdictPanel({
+  chip,
+  traceCount,
+  algo = "ML-KEM",
+}: {
+  chip: ChipId;
+  traceCount: number;
+  algo?: Algorithm;
+}) {
+  const v = computeVerdict(chip, traceCount, algo);
 
   let label: string;
   let tone: string;

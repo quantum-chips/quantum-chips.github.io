@@ -1,8 +1,8 @@
 "use client";
-import { generatePowerTrace, type ChipId } from "@/lib/sidechannel-sim";
+import { generatePowerTrace, type ChipId, type Algorithm } from "@/lib/sidechannel-sim";
 
-export default function TraceViewer({ chip }: { chip: ChipId }) {
-  const t = generatePowerTrace(chip);
+export default function TraceViewer({ chip, algo = "ML-KEM" }: { chip: ChipId; algo?: Algorithm }) {
+  const t = generatePowerTrace(chip, undefined, algo);
   const W = 720;
   const H = 130;
   const pts = t.samples

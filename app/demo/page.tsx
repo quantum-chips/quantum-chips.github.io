@@ -6,7 +6,7 @@ import Heatmap from "@/components/demo/Heatmap";
 import CpaMatrix from "@/components/demo/CpaMatrix";
 import TraceViewer from "@/components/demo/TraceViewer";
 import VerdictPanel from "@/components/demo/VerdictPanel";
-import { computeVerdict, type ChipId } from "@/lib/sidechannel-sim";
+import { computeVerdict, type ChipId, type Algorithm } from "@/lib/sidechannel-sim";
 
 // Slider position 0..100 -> trace count on a log scale up to 1e6.
 function posToTraces(pos: number): number {
@@ -64,9 +64,11 @@ function Screen({
 
 export default function Demo() {
   const [chip, setChip] = useState<ChipId>("A");
+  const [algo, setAlgo] = useState<Algorithm>("ML-KEM");
   const [pos, setPos] = useState(57); // ~2,600 traces (just past recovery)
   const traceCount = posToTraces(pos);
-  const verdict = computeVerdict(chip, traceCount);
+  const verdict = computeVerdict(chip, traceCount, algo);
+  const algoNote = algo === "ML-KEM" ? "key encapsulation (Kyber)" : "digital signatures (Dilithium)";
   const showBox = chip === "A" && verdict.recovered;
   const status =
     verdict.status === "leak" ? "KEY RECOVERED" : verdict.status === "secure" ? "SECURE — HOLDING" : "ACQUIRING";
@@ -92,8 +94,8 @@ export default function Demo() {
           See which chip leaks its key.
         </h1>
         <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-graphite">
-          Switch between an unprotected and a masked chip, then sweep the number of captured traces and
-          watch the testing pipeline run end to end.
+          The chip runs two NIST algorithms — ML-KEM (key exchange) and ML-DSA (signatures), which leak
+          differently. Pick an algorithm and a chip, then sweep the traces and watch the testing pipeline run.
         </p>
 
         <div className="mt-6 border-l-2 border-uqpurple bg-surface p-5 shadow-card">
@@ -108,7 +110,24 @@ export default function Demo() {
         {/* Control deck */}
         <div className="mt-8 grid gap-px overflow-hidden border border-hairline bg-hairline shadow-card md:grid-cols-2">
           <div className="bg-surface p-6">
-            <div className="font-mono text-[10px] uppercase tracking-widest text-graphite">Chip under test</div>
+            <div className="font-mono text-[10px] uppercase tracking-widest text-graphite">Algorithm</div>
+            <div role="group" aria-label="Select algorithm under test" className="mt-2 inline-flex border border-hairline">
+              {(["ML-KEM", "ML-DSA"] as Algorithm[]).map((a, i) => (
+                <button
+                  key={a}
+                  onClick={() => setAlgo(a)}
+                  aria-pressed={algo === a}
+                  className={`px-4 py-2 font-mono text-sm transition-colors duration-200 ${
+                    i > 0 ? "border-l border-hairline" : ""
+                  } ${algo === a ? "bg-instrument text-paper" : "text-graphite hover:text-ink"}`}
+                >
+                  {a}
+                </button>
+              ))}
+            </div>
+            <div className="mt-2 font-mono text-[11px] text-graphite">{algoNote}</div>
+
+            <div className="mt-6 font-mono text-[10px] uppercase tracking-widest text-graphite">Chip under test</div>
             <div role="group" aria-label="Select chip under test" className="mt-2 inline-flex border border-hairline">
               {(["A", "B"] as ChipId[]).map((c, i) => (
                 <button
@@ -147,8 +166,8 @@ export default function Demo() {
 
           {/* Telemetry */}
           <div className="grid grid-cols-2 gap-px bg-hairline">
+            <Readout k="Algorithm" v={algo} />
             <Readout k="Chip" v={`${chip} · ${chip === "A" ? "unprotected" : "masked"}`} />
-            <Readout k="Traces" v={traceCount.toLocaleString()} />
             <Readout k="Status" v={status} accent />
             <Readout k="Confidence" v={verdict.confidence.toFixed(2)} />
           </div>
@@ -187,13 +206,13 @@ export default function Demo() {
         {/* Stage outputs, in pipeline order */}
         <div className="mt-6">
           <Screen stage="01" label="Acquire · power & EM trace" meta="400 samples" footer="raw capture, aligned & filtered">
-            <TraceViewer chip={chip} />
+            <TraceViewer chip={chip} algo={algo} />
           </Screen>
         </div>
 
         <div className="mt-6 grid gap-6 lg:grid-cols-2">
           <Screen stage="03" label="Analyze · CPA correlation" meta="64 × 96" footer="key-byte hypotheses (y) × time samples (x)">
-            <CpaMatrix chip={chip} traceCount={traceCount} />
+            <CpaMatrix chip={chip} traceCount={traceCount} algo={algo} />
           </Screen>
 
           <Screen
@@ -202,7 +221,7 @@ export default function Demo() {
             meta="32 × 24 probe"
             footer={showBox ? "CV localisation · crypto core flagged" : "scanning · no hotspot"}
           >
-            <Heatmap chip={chip} traceCount={traceCount} />
+            <Heatmap chip={chip} traceCount={traceCount} algo={algo} />
             <div className="mt-4">
               <div
                 className="h-2 w-full"
@@ -221,7 +240,7 @@ export default function Demo() {
           <div className="mb-2 flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-graphite">
             <span className="text-uqpurple">05</span> Verdict
           </div>
-          <VerdictPanel chip={chip} traceCount={traceCount} />
+          <VerdictPanel chip={chip} traceCount={traceCount} algo={algo} />
         </div>
       </Container>
     </main>
