@@ -4,28 +4,38 @@ import { generatePowerTrace, type ChipId } from "@/lib/sidechannel-sim";
 export default function TraceViewer({ chip }: { chip: ChipId }) {
   const t = generatePowerTrace(chip);
   const W = 720;
-  const H = 120;
+  const H = 130;
   const pts = t.samples
     .map((v, i) => `${(i / (t.samples.length - 1)) * W},${H / 2 - (v * H) / 2.2}`)
     .join(" ");
 
   return (
-    <figure className="border border-hairline bg-paper">
-      <svg width="100%" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Power/EM trace for chip ${chip}`}>
-        <polyline points={pts} fill="none" stroke="#14171C" strokeWidth={1} />
-        {t.annotations.map((a) => {
-          const x = (a.sample / (t.samples.length - 1)) * W;
-          return (
-            <g key={a.sample}>
-              <line x1={x} y1={0} x2={x} y2={H} stroke="#0E7C86" strokeWidth={0.5} strokeDasharray="2 2" />
-              <text x={x + 2} y={12} fontSize="9" fill="#0E7C86" className="font-mono">{a.label}</text>
-            </g>
-          );
-        })}
-      </svg>
-      <figcaption className="border-t border-hairline px-2 py-1 font-mono text-[10px] text-graphite">
-        Power/EM trace · annotated operations
-      </figcaption>
-    </figure>
+    <svg
+      width="100%"
+      viewBox={`0 0 ${W} ${H}`}
+      role="img"
+      aria-label={`Power/EM trace for chip ${chip}`}
+      className="block"
+    >
+      {/* faint scope grid */}
+      <g stroke="#FFFFFF" strokeOpacity="0.06">
+        {Array.from({ length: 9 }, (_, i) => (
+          <line key={`v${i}`} x1={(i * W) / 8} y1={0} x2={(i * W) / 8} y2={H} />
+        ))}
+      </g>
+      <line x1={0} y1={H / 2} x2={W} y2={H / 2} stroke="#FFFFFF" strokeOpacity="0.12" />
+      <polyline points={pts} fill="none" stroke="#0E7C86" strokeWidth={1.3} />
+      {t.annotations.map((a) => {
+        const x = (a.sample / (t.samples.length - 1)) * W;
+        return (
+          <g key={a.sample}>
+            <line x1={x} y1={0} x2={x} y2={H} stroke="#FCFFA4" strokeOpacity={0.35} strokeDasharray="2 3" />
+            <text x={x + 3} y={13} fontSize="9" fill="#FCFFA4" className="font-mono">
+              {a.label}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
   );
 }

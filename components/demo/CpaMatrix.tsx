@@ -23,18 +23,13 @@ export default function CpaMatrix({ chip, traceCount }: { chip: ChipId; traceCou
   }, [r]);
 
   return (
-    <figure className="border border-hairline">
-      <canvas
-        ref={canvasRef}
-        width={W}
-        height={H}
-        role="img"
-        aria-label={`CPA correlation heatmap for chip ${chip}: key-byte hypotheses by time sample`}
-        className="block"
-      />
-      <figcaption className="border-t border-hairline bg-paper px-2 py-1 font-mono text-[10px] text-graphite">
-        CPA · hypotheses × time · peak {r.peakCorrelation.toFixed(2)}
-      </figcaption>
-    </figure>
+    <canvas
+      ref={canvasRef}
+      width={W}
+      height={H}
+      role="img"
+      aria-label={`CPA correlation heatmap for chip ${chip}: key-byte hypotheses by time sample`}
+      className="block h-auto w-full"
+    />
   );
 }

@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { generateEmHeatmap, computeVerdict, type ChipId } from "@/lib/sidechannel-sim";
 import { heatColor } from "@/lib/colorRamp";
 
-const CELL = 14; // px per grid cell
+const CELL = 14; // px per grid cell (intrinsic resolution)
 
 export default function Heatmap({ chip, traceCount }: { chip: ChipId; traceCount: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -27,17 +27,21 @@ export default function Heatmap({ chip, traceCount }: { chip: ChipId; traceCount
   const showBox = chip === "A" && verdict.recovered;
 
   return (
-    <figure className="relative inline-block border border-hairline">
+    <div className="relative">
       <canvas
         ref={canvasRef}
         width={W}
         height={H}
         role="img"
         aria-label={`Electromagnetic leakage heatmap of chip ${chip}`}
-        className="block"
+        className="block h-auto w-full"
       />
       {showBox && (
-        <svg className="pointer-events-none absolute inset-0" width={W} height={H} aria-hidden>
+        <svg
+          className="pointer-events-none absolute inset-0 h-full w-full"
+          viewBox={`0 0 ${W} ${H}`}
+          aria-hidden
+        >
           <rect
             x={core.x * CELL}
             y={core.y * CELL}
@@ -53,9 +57,6 @@ export default function Heatmap({ chip, traceCount }: { chip: ChipId; traceCount
           </text>
         </svg>
       )}
-      <figcaption className="border-t border-hairline bg-paper px-2 py-1 font-mono text-[10px] text-graphite">
-        EM spatial leakage {showBox ? "· CV hotspot detected" : "· no hotspot"}
-      </figcaption>
-    </figure>
+    </div>
   );
 }
