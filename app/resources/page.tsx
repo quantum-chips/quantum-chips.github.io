@@ -106,7 +106,7 @@ export default function Resources() {
         </ul>
 
         {/* Contact */}
-        <h2 className="mt-16 font-display text-2xl font-semibold tracking-tight">Contact</h2>
+        <h2 id="contact" className="mt-16 scroll-mt-24 font-display text-2xl font-semibold tracking-tight">Contact</h2>
         <p className="mt-3 text-graphite">
           For collaboration or funding enquiries, replace this with a real address.
         </p>

@@ -4,7 +4,7 @@ import Eyebrow from "@/components/Eyebrow";
 import StatCard from "@/components/StatCard";
 import StepFlow from "@/components/StepFlow";
 import HeroVisual from "@/components/HeroVisual";
-import { HERO, PLAIN, BENEFICIARIES, PROBLEM_STATS } from "@/content/site";
+import { HERO, PLAIN, BENEFICIARIES, PROBLEM_STATS, IMPACT } from "@/content/site";
 
 export default function Home() {
   return (
@@ -73,6 +73,30 @@ export default function Home() {
           <StepFlow />
         </div>
       </Container>
+
+      <section className="border-t border-hairline bg-surface">
+        <Container className="py-24">
+          <Eyebrow index="04">Impact &amp; outcomes</Eyebrow>
+          <p className="mt-6 max-w-3xl text-pretty font-display text-2xl font-semibold leading-snug tracking-tight text-ink">
+            {IMPACT.lede}
+          </p>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2">
+            {IMPACT.outcomes.map((o) => (
+              <div key={o.title} className="border border-hairline/70 bg-paper p-6 shadow-card">
+                <h3 className="font-display text-lg font-semibold tracking-tight">{o.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-graphite">{o.body}</p>
+              </div>
+            ))}
+          </div>
+          <Link
+            href={IMPACT.cta.href}
+            className="group mt-10 inline-flex items-center gap-2.5 border border-instrument px-6 py-3 font-mono text-sm text-instrument transition-colors duration-200 hover:bg-instrument hover:text-paper"
+          >
+            {IMPACT.cta.label}
+            <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+          </Link>
+        </Container>
+      </section>
     </main>
   );
 }
