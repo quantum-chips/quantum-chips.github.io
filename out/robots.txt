@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://quantum-safe-chips.example/sitemap.xml
