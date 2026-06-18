@@ -159,3 +159,31 @@ export const DIRECTIONS: string[] = [
   "Masking and constant-time implementations at acceptable area and energy cost.",
   "Crypto-agility in silicon: swapping algorithms without re-spinning hardware if a scheme is broken.",
 ];
+
+// Plain-language definitions for non-expert readers.
+export const GLOSSARY: { term: string; def: string }[] = [
+  {
+    term: "Post-quantum cryptography (PQC)",
+    def: "New encryption methods designed to stay secure even against a future quantum computer.",
+  },
+  {
+    term: "Quantum-safe chip",
+    def: "A hardware chip that runs post-quantum encryption to protect a device's secrets.",
+  },
+  {
+    term: "Side-channel attack",
+    def: "Stealing secrets not by breaking the maths, but by measuring a chip's physical signals — power use, electromagnetic waves or timing.",
+  },
+  {
+    term: "Harvest now, decrypt later",
+    def: "Capturing encrypted data today and storing it to unscramble once quantum computers are strong enough.",
+  },
+  {
+    term: "Cryptographic key",
+    def: "The secret that locks and unlocks encrypted data. If it leaks, the protection is gone.",
+  },
+  {
+    term: "ML-KEM / ML-DSA",
+    def: "The first encryption and digital-signature standards chosen by NIST for the quantum era (formerly Kyber and Dilithium).",
+  },
+];

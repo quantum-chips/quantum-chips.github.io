@@ -77,6 +77,15 @@ export default function Demo() {
           watch the correlation attack converge.
         </p>
 
+        <div className="mt-6 border-l-2 border-uqpurple bg-surface p-5 shadow-card">
+          <div className="font-mono text-xs uppercase tracking-[0.2em] text-uqpurple">What you&apos;re seeing</div>
+          <p className="mt-3 max-w-3xl text-pretty leading-relaxed text-ink">
+            Chip A has no protection; Chip B is hardened. Drag the slider to let an attacker &ldquo;listen&rdquo;
+            to the chip for longer. The unprotected chip eventually gives up its secret key; the protected one
+            never does. Our project automates this whole test, so a chip can be certified before it is trusted.
+          </p>
+        </div>
+
         {/* Control deck */}
         <div className="mt-8 grid gap-px overflow-hidden border border-hairline bg-hairline shadow-card md:grid-cols-2">
           <div className="bg-surface p-6">

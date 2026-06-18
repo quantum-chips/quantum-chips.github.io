@@ -4,7 +4,7 @@ import Eyebrow from "@/components/Eyebrow";
 import StatCard from "@/components/StatCard";
 import StepFlow from "@/components/StepFlow";
 import HeroVisual from "@/components/HeroVisual";
-import { HERO, PROBLEM_STATS } from "@/content/site";
+import { HERO, PLAIN, BENEFICIARIES, PROBLEM_STATS } from "@/content/site";
 
 export default function Home() {
   return (
@@ -43,6 +43,20 @@ export default function Home() {
           </figure>
         </Container>
       </section>
+
+      <Container className="py-20">
+        <div className="border-l-2 border-uqpurple bg-surface p-8 shadow-card md:p-10">
+          <div className="font-mono text-xs uppercase tracking-[0.2em] text-uqpurple">In plain terms · {PLAIN.heading}</div>
+          <p className="mt-4 max-w-3xl text-pretty text-lg leading-relaxed text-ink">{PLAIN.body}</p>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {BENEFICIARIES.map((b) => (
+              <span key={b} className="border border-hairline bg-paper px-3 py-1 font-mono text-xs text-graphite">
+                {b}
+              </span>
+            ))}
+          </div>
+        </div>
+      </Container>
 
       <Container className="py-24">
         <Eyebrow index="02">The problem</Eyebrow>

@@ -1,6 +1,6 @@
 import Container from "@/components/Container";
 import Eyebrow from "@/components/Eyebrow";
-import { MILESTONES, HARDWARE, READING, DIRECTIONS } from "@/content/resources";
+import { MILESTONES, HARDWARE, READING, DIRECTIONS, GLOSSARY } from "@/content/resources";
 
 export const metadata = { title: "Related Work & Background" };
 
@@ -17,6 +17,19 @@ export default function Resources() {
           shipping. What is missing is a rigorous way to test that silicon for side-channel leakage.
           Below: how the field arrived here, the chips now in scope, and the literature we build on.
         </p>
+
+        {/* Plain-language glossary */}
+        <div className="mt-12 border-l-2 border-uqpurple bg-surface p-6 shadow-card md:p-8">
+          <div className="font-mono text-xs uppercase tracking-[0.2em] text-uqpurple">Key terms, in plain language</div>
+          <dl className="mt-5 grid gap-x-8 gap-y-5 sm:grid-cols-2">
+            {GLOSSARY.map((g) => (
+              <div key={g.term}>
+                <dt className="font-display text-sm font-semibold text-ink">{g.term}</dt>
+                <dd className="mt-1 text-sm leading-relaxed text-graphite">{g.def}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
 
         {/* Timeline */}
         <h2 className="mt-16 font-display text-2xl font-semibold tracking-tight">How the field got here</h2>
