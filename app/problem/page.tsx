@@ -15,7 +15,7 @@ export default function Problem() {
         <div className="mt-12 grid gap-12">
           {PROBLEM_SECTIONS.map((s, i) => (
             <article key={s.heading} className="grid gap-3 border-t border-hairline pt-8 md:grid-cols-[8rem_1fr]">
-              <span className="font-mono text-sm text-instrument">{String(i + 1).padStart(2, "0")}</span>
+              <span className="font-mono text-sm text-uqpurple">{String(i + 1).padStart(2, "0")}</span>
               <div>
                 <h2 className="font-display text-2xl font-semibold">{s.heading}</h2>
                 <p className="mt-3 max-w-2xl text-lg leading-relaxed text-graphite">{s.body}</p>

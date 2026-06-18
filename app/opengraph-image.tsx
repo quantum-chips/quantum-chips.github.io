@@ -19,7 +19,7 @@ export default function OpengraphImage() {
           backgroundColor: "#F6F5F1",
           color: "#14171C",
           padding: "72px",
-          borderLeft: "20px solid #0E7C86",
+          borderLeft: "20px solid #51247A",
         }}
       >
         <div
@@ -33,7 +33,7 @@ export default function OpengraphImage() {
             textTransform: "uppercase",
           }}
         >
-          <div style={{ width: "56px", height: "2px", backgroundColor: "#0E7C86" }} />
+          <div style={{ width: "56px", height: "2px", backgroundColor: "#51247A" }} />
           <div style={{ display: "flex" }}>Research Project</div>
         </div>
 

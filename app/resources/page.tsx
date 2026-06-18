@@ -15,7 +15,7 @@ export default function Resources() {
         <ol className="mt-6 border-l border-hairline">
           {MILESTONES.map((m) => (
             <li key={m.date} className="relative ml-6 pb-8">
-              <span className="absolute -left-[1.65rem] top-1 h-2 w-2 rounded-full bg-instrument" aria-hidden />
+              <span className="absolute -left-[1.65rem] top-1 h-2 w-2 rounded-full bg-uqpurple" aria-hidden />
               <div className="font-mono text-xs uppercase tracking-wide text-instrument">{m.date}</div>
               <p className="mt-1 text-lg leading-snug text-ink">{m.title}</p>
             </li>
