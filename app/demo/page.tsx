@@ -173,7 +173,7 @@ export default function Demo() {
         {/* Pipeline stepper */}
         <div className="mt-6 border border-hairline bg-surface p-5 shadow-card">
           <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-graphite">Testing pipeline</div>
-          <ol className="mt-3 flex flex-wrap items-center gap-y-3">
+          <ol className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-2">
             {STAGES.map((s, i) => {
               const isVerdict = s.n === "05";
               const tone = isVerdict ? verdictTone : "border-hairline text-ink";
@@ -199,7 +199,9 @@ export default function Demo() {
                   ) : (
                     inner
                   )}
-                  {i < STAGES.length - 1 && <span aria-hidden className="mx-1.5 text-graphite">→</span>}
+                  {i < STAGES.length - 1 && (
+                    <span aria-hidden className="mx-1.5 hidden text-graphite sm:inline">→</span>
+                  )}
                 </li>
               );
             })}

@@ -14,7 +14,7 @@ export default function Home() {
           className="graph-paper absolute inset-0 opacity-30 [mask-image:radial-gradient(120%_90%_at_70%_30%,#000,transparent)]"
           aria-hidden
         />
-        <Container className="relative grid items-center gap-12 py-28 md:grid-cols-[1.05fr_0.95fr] md:py-36">
+        <Container className="relative grid items-center gap-12 py-16 md:grid-cols-[1.05fr_0.95fr] md:py-36">
           <div>
             <Eyebrow index={HERO.eyebrow.split(" · ")[0]}>{HERO.eyebrow.split(" · ")[1]}</Eyebrow>
             <h1 className="mt-5 text-balance font-display text-5xl font-bold leading-[1.04] tracking-tight md:text-6xl">
