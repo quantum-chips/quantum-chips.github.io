@@ -5,9 +5,9 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Quantum-Safe Silicon — Testing chips against the quantum threat",
+  title: "Automating Security Testing of Quantum-Safe Chips",
   description:
-    "A research project testing new-generation quantum-safe chips for side-channel leakage before quantum attackers exist.",
+    "A University of Queensland research project, with partner SEMICON TREND, automating side-channel security testing of new-generation quantum-safe chips.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
