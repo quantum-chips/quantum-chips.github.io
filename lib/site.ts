@@ -1,6 +1,5 @@
 // Canonical site URL, used for metadata, Open Graph, robots and sitemap.
-// TODO: set this to the real deployment URL before going live.
-export const SITE_URL = "https://quantum-safe-chips.example";
+export const SITE_URL = "https://quantum-chips.github.io";
 
 // Base path the site is served under (e.g. "/<repo>" on GitHub project pages).
 // Set at build time via PAGES_BASE_PATH; used to prefix plain <img> asset paths.
