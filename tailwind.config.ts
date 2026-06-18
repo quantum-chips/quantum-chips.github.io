@@ -11,6 +11,7 @@ const config: Config = {
         graphite: "#5C6672",
         hairline: "#D9D7CF",
         instrument: "#0E7C86",
+        uqpurple: "#51247A",
       },
       fontFamily: {
         display: ["var(--font-display)", "system-ui", "sans-serif"],
