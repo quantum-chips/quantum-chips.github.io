@@ -46,7 +46,7 @@ export default function Home() {
 
       <Container className="py-20">
         <div className="border-l-2 border-uqpurple bg-surface p-8 shadow-card md:p-10">
-          <div className="font-mono text-xs uppercase tracking-[0.2em] text-uqpurple">In plain terms · {PLAIN.heading}</div>
+          <div className="font-mono text-xs uppercase tracking-[0.2em] text-uqpurple">{PLAIN.heading}</div>
           <p className="mt-4 max-w-3xl text-pretty text-lg leading-relaxed text-ink">{PLAIN.body}</p>
           <div className="mt-6 flex flex-wrap gap-2">
             {BENEFICIARIES.map((b) => (

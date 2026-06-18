@@ -48,10 +48,7 @@ function Screen({
   return (
     <div id={`stage-${stage}`} className="scroll-mt-24 overflow-hidden border border-ink/15 bg-[#0C1116] shadow-card">
       <div className="flex items-center justify-between border-b border-white/10 px-3 py-2 font-mono text-[11px] uppercase tracking-widest text-white/55">
-        <span className="flex items-center gap-2">
-          <span className="text-uqpurple">{stage}</span>
-          {label}
-        </span>
+        <span>{label}</span>
         {meta && <span className="text-instrument">{meta}</span>}
       </div>
       <div className="p-4">{children}</div>
@@ -182,7 +179,6 @@ export default function Demo() {
               const tone = isVerdict ? verdictTone : "border-hairline text-ink";
               const inner = (
                 <span className={`flex items-center gap-2 border ${tone} px-3 py-2`}>
-                  <span className="font-mono text-[11px] text-uqpurple">{s.n}</span>
                   <span className="font-mono text-xs uppercase tracking-wide">{s.name}</span>
                   {isVerdict && (
                     <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase">
@@ -244,9 +240,7 @@ export default function Demo() {
 
         {/* Verdict */}
         <div id="stage-05" className="mt-6 max-w-xl scroll-mt-24">
-          <div className="mb-2 flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-graphite">
-            <span className="text-uqpurple">05</span> Verdict
-          </div>
+          <div className="mb-2 font-mono text-[11px] uppercase tracking-widest text-graphite">Verdict</div>
           <VerdictPanel chip={chip} traceCount={traceCount} algo={algo} />
         </div>
 

@@ -20,7 +20,7 @@ export default function Resources() {
 
         {/* Plain-language glossary */}
         <div className="mt-12 border-l-2 border-uqpurple bg-surface p-6 shadow-card md:p-8">
-          <div className="font-mono text-xs uppercase tracking-[0.2em] text-uqpurple">Key terms, in plain language</div>
+          <div className="font-mono text-xs uppercase tracking-[0.2em] text-uqpurple">Key terms</div>
           <dl className="mt-5 grid gap-x-8 gap-y-5 sm:grid-cols-2">
             {GLOSSARY.map((g) => (
               <div key={g.term}>

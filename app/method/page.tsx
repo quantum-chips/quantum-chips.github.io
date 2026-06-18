@@ -25,12 +25,9 @@ export default function Method() {
         </p>
         <ol className="mt-12 grid gap-px overflow-hidden border border-hairline bg-hairline">
           {PIPELINE.map((p) => (
-            <li key={p.n} className="grid gap-3 bg-paper p-8 md:grid-cols-[8rem_1fr]">
-              <span className="font-mono text-sm text-uqpurple">{p.n}</span>
-              <div>
-                <h2 className="font-display text-2xl font-semibold">{p.title}</h2>
-                <p className="mt-3 max-w-2xl text-lg leading-relaxed text-graphite">{p.body}</p>
-              </div>
+            <li key={p.n} className="bg-paper p-8">
+              <h2 className="font-display text-2xl font-semibold tracking-tight">{p.title}</h2>
+              <p className="mt-3 max-w-2xl text-lg leading-relaxed text-graphite">{p.body}</p>
             </li>
           ))}
         </ol>
