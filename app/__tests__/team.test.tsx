@@ -16,7 +16,7 @@ describe("Team page", () => {
 
   it("links members with a public profile to that profile", () => {
     render(<Team />);
-    const link = screen.getAllByRole("link", { name: /UQ profile/i })[0];
+    const link = screen.getAllByRole("link", { name: /profile/i })[0];
     expect(link).toHaveAttribute("href", expect.stringContaining("cyber.uq.edu.au"));
   });
 });

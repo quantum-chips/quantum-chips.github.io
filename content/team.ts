@@ -43,8 +43,10 @@ export const TEAM: Member[] = [
     name: "Dr Zihan Wang",
     role: "Postdoctoral Research Fellow",
     org: "The University of Queensland",
-    bio: "Postdoctoral Research Fellow at the University of Queensland contributing to the project's automated security-testing research.",
+    bio: "Researcher in the School of Electrical Engineering and Computer Science at UQ. His research focuses on AI usage control — governing how trained models and their training data can be reused, repurposed or queried after release.",
     initials: "ZW",
+    photo: "/team/zihan-wang.jpg",
+    profileUrl: "https://www.zihan.com.au/",
   },
   {
     name: "Mrs Kana Smith",

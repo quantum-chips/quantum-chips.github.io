@@ -45,7 +45,7 @@ export default function Team() {
                     rel="noopener noreferrer"
                     className="mt-2 inline-block font-mono text-xs text-instrument underline-offset-4 hover:underline"
                   >
-                    UQ profile →
+                    Profile →
                   </a>
                 )}
               </div>
