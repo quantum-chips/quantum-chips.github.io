@@ -1,6 +1,7 @@
 import Container from "@/components/Container";
 import Eyebrow from "@/components/Eyebrow";
 import { TEAM } from "@/content/team";
+import { BASE_PATH } from "@/lib/site";
 
 export const metadata = { title: "Team" };
 
@@ -20,7 +21,7 @@ export default function Team() {
               {m.photo ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={m.photo}
+                  src={`${BASE_PATH}${m.photo}`}
                   alt={`Portrait of ${m.name}`}
                   width={76}
                   height={76}

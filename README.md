@@ -11,7 +11,24 @@ Next.js + TypeScript + Tailwind. A grant-facing research site with an interactiv
     npm test
 
 ## Build
-    npm run build && npm run start
+    npm run build          # static export to ./out
+    npx serve out          # preview the static build locally
+
+## Deploy to GitHub Pages
+The repo includes a workflow (`.github/workflows/deploy.yml`) that builds the
+static export and publishes it to GitHub Pages on every push to `main`.
+
+1. Create a GitHub repo and push this project to `main`.
+2. In the repo: **Settings → Pages → Build and deployment → Source = GitHub Actions**.
+3. Push to `main` — the workflow builds `./out` and deploys it.
+
+Notes:
+- The workflow auto-detects the base path: a **project page**
+  (`https://<user>.github.io/<repo>`) is served under `/<repo>`; a user/org page
+  or custom domain is served at the root. No manual config needed.
+- Set the real site URL in `lib/site.ts` (`SITE_URL`) so Open Graph tags and
+  `sitemap.xml` use absolute links — e.g. `https://<user>.github.io/<repo>`.
+- A custom domain works too: add it under Settings → Pages and a `CNAME`.
 
 ## Structure
 - `app/` — routes (/, /problem, /demo, /method, /team, /resources)
