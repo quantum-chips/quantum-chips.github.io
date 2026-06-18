@@ -2,6 +2,8 @@ import Container from "@/components/Container";
 import Eyebrow from "@/components/Eyebrow";
 import { MILESTONES, READING } from "@/content/resources";
 
+export const metadata = { title: "Background & Resources" };
+
 export default function Resources() {
   return (
     <main>

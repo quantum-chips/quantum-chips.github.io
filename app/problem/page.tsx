@@ -2,6 +2,8 @@ import Container from "@/components/Container";
 import Eyebrow from "@/components/Eyebrow";
 import { PROBLEM_SECTIONS } from "@/content/problem";
 
+export const metadata = { title: "The Problem" };
+
 export default function Problem() {
   return (
     <main>

@@ -20,9 +20,6 @@ const config: Config = {
       boxShadow: {
         card: "0 1px 2px rgba(20,23,28,0.04), 0 14px 30px -18px rgba(20,23,28,0.18)",
       },
-      letterSpacing: {
-        tightish: "-0.02em",
-      },
     },
   },
   plugins: [],

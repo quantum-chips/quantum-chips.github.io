@@ -9,6 +9,8 @@ const PIPELINE = [
   { n: "05", title: "Verdict", body: "We report whether a key can be recovered, how many traces it took, and where on the die the leakage originates — the basis for comparing a protected chip against an unprotected one." },
 ];
 
+export const metadata = { title: "Methodology" };
+
 export default function Method() {
   return (
     <main>

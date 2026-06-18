@@ -2,6 +2,8 @@ import Container from "@/components/Container";
 import Eyebrow from "@/components/Eyebrow";
 import { TEAM } from "@/content/team";
 
+export const metadata = { title: "Team" };
+
 export default function Team() {
   return (
     <main>

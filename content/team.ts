@@ -54,7 +54,7 @@ export const TEAM: Member[] = [
     org: "The University of Queensland",
     bio: "Centre Manager of the UQ Cyber Research Centre since 2021, leading strategic planning, business development and the delivery of research grants and partnerships.",
     initials: "KS",
-    photo: "/team/kana-smith.png",
+    photo: "/team/kana-smith.jpg",
     profileUrl: "https://www.cyber.uq.edu.au/profile/242/kana-smith",
   },
   {
