@@ -2,7 +2,7 @@ import Link from "next/link";
 import Container from "./Container";
 
 const LINKS = [
-  { href: "/problem", label: "Problem" },
+  { href: "/chip-testing/", label: "Chip Testing" },
   { href: "/demo", label: "Demo" },
   { href: "/method", label: "Method" },
   { href: "/team", label: "Team" },

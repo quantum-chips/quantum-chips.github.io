@@ -3,14 +3,13 @@ import { describe, it, expect } from "vitest";
 import Home from "@/app/page";
 
 describe("Home", () => {
-  it("renders the hero headline and CTA", () => {
+  it("renders the project hero and module CTA", () => {
     render(<Home />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(/security-critical/i);
-    expect(screen.getByRole("link", { name: /explore the test bench/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /explore the chip module/i })).toBeInTheDocument();
   });
-  it("renders the three test steps", () => {
+  it("lists the chip-testing module", () => {
     render(<Home />);
-    expect(screen.getByText(/Acquire/)).toBeInTheDocument();
-    expect(screen.getByText(/Verdict/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /chip security testing/i })).toBeInTheDocument();
   });
 });

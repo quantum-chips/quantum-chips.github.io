@@ -1,10 +1,8 @@
 import Link from "next/link";
 import Container from "@/components/Container";
 import Eyebrow from "@/components/Eyebrow";
-import StatCard from "@/components/StatCard";
-import StepFlow from "@/components/StepFlow";
 import HeroVisual from "@/components/HeroVisual";
-import { HERO, PLAIN, BENEFICIARIES, PROBLEM_STATS, IMPACT } from "@/content/site";
+import { HERO, PLAIN, BENEFICIARIES, MODULES, IMPACT } from "@/content/site";
 import { PROJECT } from "@/content/project";
 
 export default function Home() {
@@ -22,18 +20,13 @@ export default function Home() {
               {HERO.title}
             </h1>
             <p className="mt-6 max-w-md text-pretty text-lg leading-relaxed text-graphite">{HERO.lede}</p>
-            <div className="mt-6 inline-block border border-uqpurple/40 bg-surface px-3 py-1.5 font-mono text-[11px] uppercase tracking-wide text-uqpurple">
-              {HERO.module}
-            </div>
-            <div>
-              <Link
-                href={HERO.cta.href}
-                className="group mt-6 inline-flex items-center gap-2.5 border border-instrument px-6 py-3 font-mono text-sm text-instrument transition-colors duration-200 hover:bg-instrument hover:text-paper"
-              >
-                {HERO.cta.label}
-                <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-              </Link>
-            </div>
+            <Link
+              href={HERO.cta.href}
+              className="group mt-8 inline-flex items-center gap-2.5 border border-instrument px-6 py-3 font-mono text-sm text-instrument transition-colors duration-200 hover:bg-instrument hover:text-paper"
+            >
+              {HERO.cta.label}
+              <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+            </Link>
           </div>
           <figure className="m-0">
             <div className="border border-hairline bg-surface p-3 shadow-card">
@@ -69,6 +62,35 @@ export default function Home() {
       </Container>
 
       <Container className="py-20">
+        <Eyebrow>Modules</Eyebrow>
+        <p className="mt-5 max-w-2xl text-pretty leading-relaxed text-graphite">
+          The project spans the stack from silicon to applications, delivered with its partners. This
+          site presents the hardware module.
+        </p>
+        <div className="mt-8 grid gap-5">
+          {MODULES.map((m) => (
+            <Link
+              key={m.href}
+              href={m.href}
+              className="group border border-hairline/70 bg-surface p-6 shadow-card transition-shadow duration-300 hover:shadow-none"
+            >
+              <div className="font-mono text-[10px] uppercase tracking-widest text-uqpurple">{m.tag}</div>
+              <div className="mt-2 flex items-center justify-between font-display text-xl font-semibold tracking-tight">
+                {m.name}
+                <span
+                  aria-hidden
+                  className="font-mono text-instrument transition-transform duration-200 group-hover:translate-x-1"
+                >
+                  →
+                </span>
+              </div>
+              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-graphite">{m.desc}</p>
+            </Link>
+          ))}
+        </div>
+      </Container>
+
+      <Container className="py-20">
         <div className="border-l-2 border-uqpurple bg-surface p-8 shadow-card md:p-10">
           <div className="font-mono text-xs uppercase tracking-[0.2em] text-uqpurple">{PLAIN.heading}</div>
           <p className="mt-4 max-w-3xl text-pretty text-lg leading-relaxed text-ink">{PLAIN.body}</p>
@@ -79,22 +101,6 @@ export default function Home() {
               </span>
             ))}
           </div>
-        </div>
-      </Container>
-
-      <Container className="py-24">
-        <Eyebrow index="02">The problem</Eyebrow>
-        <div className="mt-8 grid gap-5 sm:grid-cols-3">
-          {PROBLEM_STATS.map((s) => (
-            <StatCard key={s.label} value={s.value} label={s.label} />
-          ))}
-        </div>
-      </Container>
-
-      <Container className="py-24">
-        <Eyebrow index="03">How we test</Eyebrow>
-        <div className="mt-8">
-          <StepFlow />
         </div>
       </Container>
 
