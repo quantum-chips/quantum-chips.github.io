@@ -5,7 +5,7 @@ import Home from "@/app/page";
 describe("Home", () => {
   it("renders the hero headline and CTA", () => {
     render(<Home />);
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(/break tomorrow's chips/i);
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(/security-critical/i);
     expect(screen.getByRole("link", { name: /explore the test bench/i })).toBeInTheDocument();
   });
   it("renders the three test steps", () => {

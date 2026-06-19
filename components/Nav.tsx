@@ -17,7 +17,7 @@ export default function Nav() {
           href="/"
           className="font-display text-base font-bold tracking-tight transition-opacity hover:opacity-70 sm:text-lg"
         >
-          Quantum-Safe<span className="text-instrument">·</span>Silicon
+          Quantum-Safe<span className="text-instrument">·</span>Transition
         </Link>
         <nav className="-mx-6 flex gap-x-4 gap-y-1 overflow-x-auto whitespace-nowrap px-6 font-mono text-[13px] sm:mx-0 sm:flex-wrap sm:justify-end sm:gap-x-6 sm:overflow-visible sm:px-0">
           {LINKS.map((l) => (

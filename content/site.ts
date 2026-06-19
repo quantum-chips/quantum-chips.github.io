@@ -1,8 +1,9 @@
 export const HERO = {
-  eyebrow: "01 · TESTING QUANTUM-SAFE SILICON",
-  title: "We break tomorrow's chips before tomorrow does.",
+  eyebrow: "Transitioning to Quantum-Safe · a QDSA defence project",
+  module: "Module · Quantum-Safe Chip Security Testing",
+  title: "Security-critical systems are going quantum-safe. We make sure they actually are.",
   lede:
-    "Post-quantum algorithms are only as safe as the silicon that runs them. We side-channel test new-generation quantum-safe chips to find the leaks an attacker would — today.",
+    "A University of Queensland–led project under the Queensland Defence Science Alliance, accelerating the transition to post-quantum cryptography for security-critical and defence applications. This site covers one module: side-channel security testing of the quantum-safe chips that run it.",
   cta: { label: "Explore the test bench", href: "/demo" },
 };
 

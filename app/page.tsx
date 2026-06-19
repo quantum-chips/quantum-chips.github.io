@@ -5,6 +5,7 @@ import StatCard from "@/components/StatCard";
 import StepFlow from "@/components/StepFlow";
 import HeroVisual from "@/components/HeroVisual";
 import { HERO, PLAIN, BENEFICIARIES, PROBLEM_STATS, IMPACT } from "@/content/site";
+import { PROJECT } from "@/content/project";
 
 export default function Home() {
   return (
@@ -16,18 +17,23 @@ export default function Home() {
         />
         <Container className="relative grid items-center gap-12 py-16 md:grid-cols-[1.05fr_0.95fr] md:py-36">
           <div>
-            <Eyebrow index={HERO.eyebrow.split(" · ")[0]}>{HERO.eyebrow.split(" · ")[1]}</Eyebrow>
-            <h1 className="mt-5 text-balance font-display text-5xl font-bold leading-[1.04] tracking-tight md:text-6xl">
+            <Eyebrow>{HERO.eyebrow}</Eyebrow>
+            <h1 className="mt-5 text-balance font-display text-4xl font-bold leading-[1.1] tracking-tight md:text-5xl">
               {HERO.title}
             </h1>
             <p className="mt-6 max-w-md text-pretty text-lg leading-relaxed text-graphite">{HERO.lede}</p>
-            <Link
-              href={HERO.cta.href}
-              className="group mt-9 inline-flex items-center gap-2.5 border border-instrument px-6 py-3 font-mono text-sm text-instrument transition-colors duration-200 hover:bg-instrument hover:text-paper"
-            >
-              {HERO.cta.label}
-              <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-            </Link>
+            <div className="mt-6 inline-block border border-uqpurple/40 bg-surface px-3 py-1.5 font-mono text-[11px] uppercase tracking-wide text-uqpurple">
+              {HERO.module}
+            </div>
+            <div>
+              <Link
+                href={HERO.cta.href}
+                className="group mt-6 inline-flex items-center gap-2.5 border border-instrument px-6 py-3 font-mono text-sm text-instrument transition-colors duration-200 hover:bg-instrument hover:text-paper"
+              >
+                {HERO.cta.label}
+                <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+              </Link>
+            </div>
           </div>
           <figure className="m-0">
             <div className="border border-hairline bg-surface p-3 shadow-card">
@@ -43,6 +49,24 @@ export default function Home() {
           </figure>
         </Container>
       </section>
+
+      <Container className="py-20">
+        <Eyebrow>About the project</Eyebrow>
+        <h2 className="mt-5 max-w-3xl text-balance font-display text-2xl font-semibold leading-snug tracking-tight">
+          {PROJECT.fullTitle}
+        </h2>
+        <p className="mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-graphite">{PROJECT.mission}</p>
+        <dl className="mt-8 grid gap-px overflow-hidden border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">
+          {PROJECT.facts.map((f) => (
+            <div key={f.k} className="bg-surface p-5">
+              <dt className="font-mono text-[10px] uppercase tracking-widest text-uqpurple">{f.k}</dt>
+              <dd className="mt-1 text-sm leading-snug text-ink">{f.v}</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="mt-6 max-w-2xl text-pretty leading-relaxed text-graphite">{PROJECT.moduleNote}</p>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-graphite">{PROJECT.funding}</p>
+      </Container>
 
       <Container className="py-20">
         <div className="border-l-2 border-uqpurple bg-surface p-8 shadow-card md:p-10">

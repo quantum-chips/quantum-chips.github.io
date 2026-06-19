@@ -35,20 +35,24 @@ export default function OpengraphImage() {
           }}
         >
           <div style={{ width: "56px", height: "2px", backgroundColor: "#51247A" }} />
-          <div style={{ display: "flex" }}>Research Project</div>
+          <div style={{ display: "flex" }}>QDSA · Defence Research</div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            fontSize: "76px",
-            fontWeight: 700,
-            lineHeight: 1.05,
-            letterSpacing: "-2px",
-            maxWidth: "920px",
-          }}
-        >
-          Automating Security Testing of Quantum-Safe Chips
+        <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+          <div
+            style={{
+              display: "flex",
+              fontSize: "82px",
+              fontWeight: 700,
+              lineHeight: 1.02,
+              letterSpacing: "-2px",
+            }}
+          >
+            Transitioning to Quantum-Safe
+          </div>
+          <div style={{ display: "flex", fontSize: "30px", color: "#5C6672", maxWidth: "960px" }}>
+            Security testing of post-quantum cryptography in security-critical applications
+          </div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
@@ -61,7 +65,7 @@ export default function OpengraphImage() {
           <div style={{ display: "flex", fontSize: "28px", color: "#14171C" }}>
             The University of Queensland
             <span style={{ color: "#0E7C86", padding: "0 14px" }}>·</span>
-            SEMICON TREND
+            QDSA Collaborative Research Grant
           </div>
         </div>
       </div>

@@ -12,8 +12,9 @@ export default function Team() {
         <Eyebrow index="05">People</Eyebrow>
         <h1 className="mt-5 font-display text-4xl font-bold tracking-tight md:text-5xl">The team</h1>
         <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-graphite">
-          The project is led from the University of Queensland&apos;s Cyber Research Centre, in
-          partnership with SEMICON TREND PTY LTD.
+          The chip-testing module is led from the University of Queensland&apos;s Cyber Research Centre,
+          with industry partner SEMICON TREND — part of the QDSA-funded &ldquo;Transitioning to
+          Quantum-Safe&rdquo; project.
         </p>
         <div className="mt-12 grid gap-5 sm:grid-cols-2">
           {TEAM.map((m) => (

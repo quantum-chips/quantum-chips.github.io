@@ -8,6 +8,6 @@ export const BASE_PATH = (() => {
   return raw === "/" ? "" : raw;
 })();
 
-export const SITE_NAME = "Automating Security Testing of Quantum-Safe Chips";
+export const SITE_NAME = "Transitioning to Quantum-Safe";
 export const SITE_DESCRIPTION =
-  "A University of Queensland research project, with industry partner SEMICON TREND, automating side-channel security testing of new-generation quantum-safe chips.";
+  "A University of Queensland–led QDSA defence research project: security testing of post-quantum cryptography in security-critical applications. This module covers side-channel security testing of quantum-safe chips.";
