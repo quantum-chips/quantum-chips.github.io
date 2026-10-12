@@ -9,43 +9,41 @@ export default function Team() {
   return (
     <main>
       <PageHeader
-        pill="Team"
-        title="The people behind it."
+        title="Project team"
         lede={
           <>
-            The chip-testing module is led from the University of Queensland&apos;s Cyber Research Centre, with
-            industry partner SEMICON TREND — part of the QDSA-funded &ldquo;Transitioning to Quantum-Safe&rdquo;
-            project.
+            Researchers and staff from the University of Queensland&apos;s Cyber Research Centre and industry
+            partner SEMICON TREND, working on the QDSA-funded &ldquo;Transitioning to Quantum-Safe&rdquo; project.
           </>
         }
       />
 
       <Section bordered={false} flushTop>
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid gap-x-12 md:grid-cols-2">
           {TEAM.map((m) => (
-            <article key={m.name} className="flex gap-5 rounded-lg border border-line bg-panel p-6">
+            <article key={m.name} className="flex gap-4 border-t border-line-strong py-7 sm:gap-5">
               {m.photo ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={`${BASE_PATH}${m.photo}`}
                   alt={`Portrait of ${m.name}`}
-                  width={72}
-                  height={72}
+                  width={88}
+                  height={88}
                   loading="lazy"
-                  className="h-[72px] w-[72px] shrink-0 rounded-md object-cover"
+                  className="h-16 w-16 shrink-0 rounded-md object-cover sm:h-[88px] sm:w-[88px]"
                 />
               ) : (
                 <div
                   aria-hidden
-                  className="flex h-[72px] w-[72px] shrink-0 items-center justify-center rounded-md border border-line-strong bg-raised text-base font-medium text-fg-muted"
+                  className="flex h-16 w-16 shrink-0 items-center justify-center rounded-md border border-line-strong bg-panel text-base font-medium text-fg-muted sm:h-[88px] sm:w-[88px]"
                 >
                   {m.initials}
                 </div>
               )}
               <div className="min-w-0">
-                <h2 className="text-base font-medium text-fg">{m.name}</h2>
+                <h2 className="text-lg font-medium text-fg">{m.name}</h2>
                 <p className="mt-0.5 text-sm text-fg-muted">{m.role}</p>
-                <p className="font-mono text-[11px] text-fg-subtle">{m.org}</p>
+                <p className="mt-1 text-xs leading-relaxed text-fg-subtle">{m.org}</p>
                 <p className="mt-3 text-sm leading-relaxed text-fg-muted">{m.bio}</p>
                 {m.profileUrl && (
                   <a
@@ -54,7 +52,7 @@ export default function Team() {
                     rel="noopener noreferrer"
                     className="mt-3 inline-block text-sm text-fg-subtle underline-offset-4 transition-colors hover:text-fg hover:underline"
                   >
-                    Profile →
+                    View profile <span aria-hidden>↗</span>
                   </a>
                 )}
               </div>

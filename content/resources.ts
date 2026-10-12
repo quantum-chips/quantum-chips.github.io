@@ -61,7 +61,7 @@ export const READING: { category: string; items: Ref[] }[] = [
         title: "Harvest now, decrypt later",
         where: "overview",
         href: "https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later",
-        note: "Why data with a long shelf life is already exposed.",
+        note: "The risk to encrypted data that must remain confidential for many years.",
       },
       {
         title: "Quantum Threat Timeline Report 2025",
@@ -73,24 +73,24 @@ export const READING: { category: string; items: Ref[] }[] = [
         title: "How to factor 2048-bit RSA in 8 hours using 20 million noisy qubits",
         where: "Gidney & Ekerå · arXiv 1905.09749",
         href: "https://arxiv.org/abs/1905.09749",
-        note: "The landmark hardware estimate for breaking RSA with Shor's algorithm.",
+        note: "A hardware resource estimate for breaking RSA with Shor's algorithm.",
       },
       {
         title: "How to factor 2048-bit RSA with less than a million noisy qubits",
         where: "Gidney · arXiv 2505.15917",
         href: "https://arxiv.org/abs/2505.15917",
-        note: "Re-estimated ~20× lower in 2025 — the threat bar keeps dropping.",
+        note: "A revised estimate with a ~20× reduction in the required qubit count.",
       },
       {
         title: "NIST finalist SIKE cracked on a classical PC",
         where: "Castryck & Decru · 2022",
         href: "https://www.securityweek.com/nist-post-quantum-algorithm-finalist-cracked-using-classical-pc/",
-        note: "Even a standardisation finalist fell — why crypto-agility and continuous testing matter.",
+        note: "A classical cryptanalytic attack on SIKE.",
       },
     ],
   },
   {
-    category: "Migration in the real world",
+    category: "Deployed protocols",
     items: [
       {
         title: "Quantum resistance and the Signal protocol (PQXDH)",
@@ -113,13 +113,13 @@ export const READING: { category: string; items: Ref[] }[] = [
     ],
   },
   {
-    category: "Side-channel & hardware testing — our focus",
+    category: "Side-channel & hardware testing",
     items: [
       {
         title: "Side-channel & fault-injection attacks on Kyber/Dilithium",
         where: "ACM TECS · 2023",
         href: "https://dl.acm.org/doi/10.1145/3603170",
-        note: "Foundational survey of the attacks this project automates against.",
+        note: "A survey of side-channel and fault-injection attacks relevant to this project.",
       },
       {
         title: "Machine learning and side-channel attacks on PQC",
@@ -131,13 +131,13 @@ export const READING: { category: string; items: Ref[] }[] = [
         title: "Evaluating the side-channel security of post-quantum hardware IP",
         where: "eShard",
         href: "https://www.eshard.com/blog/pqshield-eshard-mlkem-security-test",
-        note: "A practical ML-KEM evaluation on FPGA — a template for our methodology.",
+        note: "A practical side-channel evaluation of ML-KEM on FPGA.",
       },
       {
         title: "Side-channel attacks on post-quantum cryptography",
         where: "Semiconductor Engineering",
         href: "https://semiengineering.com/side-channel-attacks-on-post-quantum-cryptography/",
-        note: "An accessible primer on why standardised math still leaks in silicon.",
+        note: "An introduction to side-channel leakage in implementations of post-quantum algorithms.",
       },
     ],
   },
@@ -148,7 +148,7 @@ export const READING: { category: string; items: Ref[] }[] = [
         title: "Post-Quantum Cryptography & Quantum-Safe Security: a survey",
         where: "arXiv 2510.10436",
         href: "https://arxiv.org/abs/2510.10436",
-        note: "End-to-end landscape, from threat to implementation security.",
+        note: "A survey covering quantum threats and implementation security.",
       },
       {
         title: "Lattice-based cryptographic accelerators for the post-quantum era",
@@ -161,7 +161,7 @@ export const READING: { category: string; items: Ref[] }[] = [
 ];
 
 export const DIRECTIONS: string[] = [
-  "A standardised, reproducible side-channel and fault-injection test methodology for PQC hardware — the gap this project targets.",
+  "Standardised, reproducible side-channel and fault-injection tests for PQC hardware.",
   "Masking and constant-time implementations at acceptable area and energy cost.",
   "Crypto-agility in silicon: swapping algorithms without re-spinning hardware if a scheme is broken.",
 ];
@@ -178,15 +178,15 @@ export const GLOSSARY: { term: string; def: string }[] = [
   },
   {
     term: "Side-channel attack",
-    def: "Stealing secrets not by breaking the maths, but by measuring a chip's physical signals — power use, electromagnetic waves or timing.",
+    def: "Recovering secret information from a chip's power use, electromagnetic emissions or execution timing.",
   },
   {
     term: "Fault-injection attack",
-    def: "Disturbing a chip while it computes — for example with a precisely timed electromagnetic pulse — to corrupt a result or skip a security check.",
+    def: "Disturbing a chip during computation to corrupt a result or skip a security check, for example with a precisely timed electromagnetic pulse.",
   },
   {
     term: "Harvest now, decrypt later",
-    def: "Capturing encrypted data today and storing it to unscramble once quantum computers are strong enough.",
+    def: "Capturing encrypted data now for decryption by a sufficiently powerful quantum computer in the future.",
   },
   {
     term: "Cryptographic key",

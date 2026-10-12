@@ -13,8 +13,8 @@ export default function Method() {
     <main>
       <PageHeader
         pill="Method"
-        title="Every known attack becomes a test."
-        lede="We turn the threat model into an attack-driven checklist: each side-channel or fault-injection attack on ML-KEM and ML-DSA becomes a test case with its own measurements and pass/fail criteria. No single security score."
+        title="Testing methodology"
+        lede="The evaluation framework defines test cases for side-channel and fault-injection attacks on ML-KEM and ML-DSA, with measurements and pass/fail criteria for each attack. Automated test procedures are the next stage of development."
       >
         <ol className="grid overflow-hidden rounded-lg border border-line-strong bg-panel md:grid-cols-5">
           {FLOW.map((f, i) => (
@@ -29,8 +29,8 @@ export default function Method() {
 
       <Section
         id="pipeline"
-        title="The side-channel measurement pipeline"
-        intro="Side-channel test cases run through five stages, from raw traces to a verdict. The steps a specialist would normally tune by hand — aligning traces, choosing a leakage model, picking where to look — are learned by neural networks."
+        title="Side-channel measurement pipeline"
+        intro="The proposed five-stage workflow combines trace acquisition and alignment, neural-network leakage analysis, spatial localisation and attack assessment. It is designed to reduce the manual work involved in evaluating traces."
       >
         <ol className="divide-y divide-line border-y border-line">
           {PIPELINE.map((p) => (
@@ -49,7 +49,7 @@ export default function Method() {
                     href={`/demo/#${demoAnchor(p.n)}`}
                     className="mt-3 inline-block text-sm text-fg-subtle underline-offset-4 transition-colors hover:text-fg hover:underline"
                   >
-                    See it in the test bench →
+                    View this stage in the demo →
                   </Link>
                 )}
               </div>
@@ -60,8 +60,8 @@ export default function Method() {
 
       <Section
         id="metrics"
-        title="What we measure"
-        intro="Metrics follow the attack mechanism. Inducing a fault is not the same as exploiting it, and a countermeasure counts only if the same attack gets measurably harder."
+        title="Evaluation metrics"
+        intro="We measure fault induction and successful exploitation separately. Countermeasures are evaluated by how much they increase the difficulty of the same attack."
       >
         <div className="grid gap-3 lg:grid-cols-3">
           {METRICS.map((g) => (
@@ -82,10 +82,9 @@ export default function Method() {
 
         <div className="mt-12 grid gap-6 md:grid-cols-[minmax(0,18rem)_1fr] md:gap-12">
           <div>
-            <h3 className="text-base font-medium text-fg">What an attacker needs</h3>
+            <h3 className="text-base font-medium text-fg">Attack requirements</h3>
             <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-              Two attacks with the same impact can need very different access. Each test also records how hard it
-              was to mount.
+              Each test records the access required and the difficulty of mounting the attack.
             </p>
           </div>
           <ul className="flex flex-wrap content-start gap-2">
@@ -100,8 +99,8 @@ export default function Method() {
 
       <Section
         id="checklist"
-        title="The checklist"
-        intro="Representative rows. Each one is a test: what is attacked, how success is measured, which countermeasure is checked, and what gets recorded."
+        title="Evaluation checklist"
+        intro="These examples specify the attack target, success metrics, countermeasure and recorded result for each test."
       >
         <div className="overflow-x-auto rounded-lg border border-line-strong">
           <table aria-label="Attack-driven evaluation checklist" className="w-full min-w-[56rem] text-left text-sm">
@@ -130,7 +129,7 @@ export default function Method() {
         </div>
         <div className="mt-8 flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[13px] text-fg-subtle">Framework and checklist from the {THREAT_SOURCE}.</p>
-          <TextLink href="/threat-model/">All {THREATS.length} attack paths</TextLink>
+          <TextLink href="/threat-model/">View {THREATS.length} attack paths</TextLink>
         </div>
       </Section>
     </main>

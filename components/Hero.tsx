@@ -21,7 +21,7 @@ export default function Hero({
   return (
     <section className="hero-mesh relative overflow-hidden">
       <Container className="pb-16 pt-16 md:pb-24 md:pt-28">
-        <Pill dot>{pill}</Pill>
+        <Pill>{pill}</Pill>
         <h1 className="mt-6 max-w-3xl text-[clamp(2.5rem,5.6vw,4rem)] font-semibold leading-[1.04] tracking-[-0.035em]">
           <Headline text={title} />
         </h1>

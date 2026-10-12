@@ -5,7 +5,7 @@ import ChipTesting from "@/app/chip-testing/page";
 describe("Chip Testing module", () => {
   it("renders the module hero and the test steps", () => {
     render(<ChipTesting />);
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(/tomorrow[’']s chips/i);
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(/testing quantum-safe chips/i);
     expect(screen.getByRole("heading", { name: "Acquire" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Verdict" })).toBeInTheDocument();
   });

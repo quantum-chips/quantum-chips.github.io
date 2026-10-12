@@ -6,8 +6,8 @@ export const FLOW: { title: string; body: string }[] = [
   { title: "Threat model", body: "An attack from the review: its target operation and the attacker capability it needs." },
   { title: "Test case", body: "A configuration: acquisition or fault parameters, metrics, expected countermeasure behaviour." },
   { title: "Measurement / fault injection", body: "Capture traces from the running chip, or disturb it at the targeted step." },
-  { title: "Metric calculation", body: "The attack-specific measures: trace count, SNR, fault success, bypass rate…" },
-  { title: "Assessment result", body: "Recovered or not, detected or not — recorded in the checklist row." },
+  { title: "Metric calculation", body: "Calculate trace count, SNR, fault success or bypass rate, as appropriate for the attack." },
+  { title: "Assessment result", body: "Record key recovery, fault detection and other outcomes in the checklist." },
 ];
 
 export type MetricGroup = { id: string; title: string; intro: string; items: { name: string; what: string }[] };
@@ -16,7 +16,7 @@ export const METRICS: MetricGroup[] = [
   {
     id: "sca",
     title: "Side-channel",
-    intro: "Leakage detectability and practical attack success. Profiled attacks (SASCA, templates) and non-profiled ones (CPA) are measured on their own terms.",
+    intro: "Measure leakage and key recovery for profiled attacks (SASCA, templates) and non-profiled attacks (CPA).",
     items: [
       { name: "Trace count", what: "Traces needed to recover the targeted secret." },
       { name: "Signal-to-noise ratio", what: "Strength of exploitable leakage relative to measurement noise." },
@@ -29,7 +29,7 @@ export const METRICS: MetricGroup[] = [
   {
     id: "fia",
     title: "Fault injection",
-    intro: "Separates inducing a fault from exploiting it: a fault that lands but is caught, or never released, is not a break.",
+    intro: "Measure whether a fault changes the computation, whether it is detected, and whether it enables an attack.",
     items: [
       { name: "Fault injection success rate", what: "Attempts in which the fault alters the intended computation or control flow." },
       { name: "Fault detection rate", what: "Successful faults caught by the countermeasure." },
@@ -42,7 +42,7 @@ export const METRICS: MetricGroup[] = [
   {
     id: "countermeasures",
     title: "Countermeasures",
-    intro: "A protection is judged by repeating the same attack before and after it is enabled — not by whether it is present.",
+    intro: "Compare the same attack with and without each countermeasure to measure its effect.",
     items: [
       { name: "Masking", what: "Trace count, correlation and key-recovery rate, before vs after." },
       { name: "Shuffling", what: "Whether SASCA or template recovery survives randomised operation order." },

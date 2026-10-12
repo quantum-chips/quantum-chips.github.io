@@ -17,8 +17,8 @@ export default function ThreatModel() {
     <main>
       <PageHeader
         pill="Threat model · Milestone 1"
-        title="Where quantum-safe chips break."
-        lede="Our first milestone: a structured review of published side-channel and fault-injection attacks on ML-KEM and ML-DSA, classified by the step they target, what they need and what they get. It is the map every test case is drawn from."
+        title="Physical attacks on ML-KEM and ML-DSA"
+        lede="The first project milestone reviews published side-channel and fault-injection attacks on ML-KEM and ML-DSA. Attacks are classified by the procedure targeted, attacker requirements and outcome. The review guides the evaluation checklist."
       >
         <StatBand
           stats={[
@@ -29,7 +29,7 @@ export default function ThreatModel() {
         />
       </PageHeader>
 
-      <Section title="What the review found">
+      <Section title="Review findings">
         <ol className="divide-y divide-line border-y border-line">
           {FINDINGS.map((f, i) => (
             <li key={f.title} className="grid gap-2 py-6 md:grid-cols-[3rem_minmax(0,18rem)_1fr] md:gap-8">
@@ -43,15 +43,15 @@ export default function ThreatModel() {
 
       <Section
         id="attacks"
-        title="Where the attacks land"
-        intro={`ML-KEM and ML-DSA each run in three steps. Pick one to see its attacks; the table below lists all ${THREATS.length} paths, transcribed from the report. Side-channel attacks listen to the chip; fault-injection attacks disturb it.`}
+        title="Attacks by procedure"
+        intro={`ML-KEM and ML-DSA each have three procedures. Select a procedure to see the relevant attacks. The table lists ${THREATS.length} attack paths transcribed from the report, covering side-channel leakage and fault injection.`}
       >
         <ThreatExplorer />
       </Section>
 
       <Section
-        title="Does the secret repeat?"
-        intro="Whether the same secret is processed again decides the attack model: a fresh key or nonce must be read from one trace, a reused key can be averaged over many."
+        title="Secret reuse and trace models"
+        intro="The trace model depends on whether a secret is reused. Attacks on a fresh key or nonce must use a single trace; attacks on a reused key can combine multiple traces."
       >
         <div className="overflow-x-auto rounded-lg border border-line-strong">
           <table className="w-full min-w-[40rem] text-left text-sm">
@@ -79,13 +79,13 @@ export default function ThreatModel() {
         </div>
       </Section>
 
-      <Section title="From threat model to test">
+      <Section title="Test design">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <p className="max-w-2xl text-lg leading-relaxed text-fg-muted">
-            Each path becomes a test case in an attack-driven checklist, measured with metrics that fit its
-            mechanism — trace counts for side channels, detection and bypass rates for faults.
+            The checklist assigns each attack path a test case and relevant metrics, including trace counts
+            for side-channel attacks and detection and bypass rates for fault injection.
           </p>
-          <TextLink href="/method/">How each attack becomes a test</TextLink>
+          <TextLink href="/method/">Testing methodology</TextLink>
         </div>
         <p className="mt-12 border-t border-line pt-6 text-[13px] text-fg-subtle">Source: {THREAT_SOURCE}.</p>
       </Section>

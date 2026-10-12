@@ -28,12 +28,12 @@ export default function BenchFigure() {
           width={1536}
           height={1024}
           loading="lazy"
-          alt="The same kind of device opened, seen from above: a small circuit board with a secure-element chip beside its USB connector"
+          alt="An opened USB security device viewed from above, with a secure-element chip on the circuit board beside its USB connector"
           className="aspect-[3/2] w-full rounded-lg border border-line object-cover md:aspect-auto md:h-full"
         />
       </div>
       <figcaption className="mt-3 text-[13px] text-fg-subtle">
-        Illustrations, AI-generated. Photos of the real bench to follow.
+        AI-generated illustrations of the test setup and device.
       </figcaption>
     </figure>
   );

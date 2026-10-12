@@ -94,7 +94,7 @@ function Screen({
 }
 
 function wordFor(status: "leak" | "secure" | "pending") {
-  return status === "leak" ? "key recovered" : status === "secure" ? "secure" : "analysing";
+  return status === "leak" ? "key recovered" : status === "secure" ? "key not recovered" : "below recovery threshold";
 }
 
 export default function Demo() {
@@ -147,8 +147,8 @@ export default function Demo() {
     <main>
       <PageHeader
         pill="Test bench · illustrative simulation"
-        title="See which chip leaks its key."
-        lede="Chip A has no protection; Chip B is masked. Watch the attacker listen for longer and longer: the unprotected chip eventually gives up its key, the masked one never does. Take over at any point — both chips run ML-KEM (key exchange) and ML-DSA (signatures), which leak differently."
+        title="Side-channel testing demo"
+        lede="Compare simulated traces from an unprotected chip (A) and a masked chip (B). Select ML-KEM or ML-DSA and adjust the trace count to see how the modelled attack behaves. All traces and results are synthetic."
       />
 
       <Section bordered={false} flushTop>
@@ -312,15 +312,15 @@ export default function Demo() {
       </Section>
 
       <Section
-        title="Why the masked chip holds"
-        intro="Masking doesn’t hide the chip; it breaks the link between each measurement and the secret. It raises the bar rather than closing the door — higher-order attacks combine several points of a trace — which is why a countermeasure is judged by repeating the attack before and after it is enabled."
+        title="Masking and first-order leakage"
+        intro="Masking uses random shares to reduce the dependence between individual measurements and a secret. Higher-order attacks can combine several trace samples, so the effect of masking is evaluated by repeating attacks with and without it."
       >
         <MaskingFigure />
       </Section>
 
       <Section
-        title="Two algorithms, side by side"
-        intro="The same chip and trace count, run against each algorithm. They leak from different regions of the chip and recover at different speeds."
+        title="ML-KEM and ML-DSA comparison"
+        intro="Compare the two algorithms at the same trace count. The simulation assigns different leakage locations and recovery thresholds to illustrate how attack results can vary."
       >
         <div className="grid gap-3 md:grid-cols-2">
           {(["ML-KEM", "ML-DSA"] as Algorithm[]).map((a) => {
@@ -328,17 +328,17 @@ export default function Demo() {
             const tone = v.status === "leak" ? "text-accent" : v.status === "secure" ? "text-fg" : "text-fg-subtle";
             return (
               <div key={a} className="overflow-hidden rounded-lg border border-line bg-panel">
-                <div className="flex items-center justify-between border-b border-line px-4 py-2.5 font-mono text-[11px] text-fg-subtle">
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-2.5 font-mono text-[11px] text-fg-subtle">
                   <span>
                     <span className="text-fg">{a}</span> · {a === "ML-KEM" ? "key exchange" : "signatures"}
                   </span>
-                  <span>recovers at {recoveryThreshold(a).toLocaleString("en-US")}</span>
+                  {chip === "A" && <span>Recovery threshold · {recoveryThreshold(a).toLocaleString("en-US")} traces</span>}
                 </div>
                 <div className="p-4">
                   <Heatmap chip={chip} traceCount={traceCount} algo={a} />
                 </div>
                 <div className={`border-t border-line px-4 py-2.5 font-mono text-[11px] ${tone}`}>
-                  {wordFor(v.status)} · conf {v.confidence.toFixed(2)}
+                  {wordFor(v.status)} · simulated score {v.confidence.toFixed(2)}
                 </div>
               </div>
             );

@@ -42,4 +42,4 @@ Notes:
 ## Notes
 - All demo figures are synthetic simulations, clearly labelled. Replace the
   generators in `lib/sidechannel-sim.ts` with real trace data to go live.
-- Contact details on /resources#contact are still to be published.
+- Contact enquiries on /resources#contact point to the investigators' public profiles on /team.

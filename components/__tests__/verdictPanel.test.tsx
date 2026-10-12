@@ -9,10 +9,10 @@ describe("VerdictPanel", () => {
   });
   it("shows pending for chip A below the threshold", () => {
     render(<VerdictPanel chip="A" traceCount={200} />);
-    expect(screen.getByText(/acquiring/i)).toBeInTheDocument();
+    expect(screen.getByText(/key not recovered at this trace count/i)).toBeInTheDocument();
   });
-  it("shows no exploitable leakage for chip B", () => {
+  it("shows no key recovery in the simulation for chip B", () => {
     render(<VerdictPanel chip="B" traceCount={1000000} />);
-    expect(screen.getByText(/no exploitable leakage/i)).toBeInTheDocument();
+    expect(screen.getByText(/key not recovered in this simulation/i)).toBeInTheDocument();
   });
 });

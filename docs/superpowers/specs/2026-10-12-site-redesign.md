@@ -37,6 +37,14 @@ Radius 6 / 12 / 16, never above 16. One shadow (`shadow-raised`) on product pane
 
 **Not used:** left-border callout cards, emoji, a card per list item, purple gradients, decorative labels ("LIVE", "FIG.01").
 
+## Editorial refinement (13 October 2026)
+
+Use direct research language and descriptive headings: "Project team", "Testing methodology" and "Research aims". Avoid advertising slogans, anthropomorphism and unqualified promises of security. Describe ongoing prototype work as an approach under development; keep completed milestones distinct from research aims.
+
+The team uses a directory layout with portraits and dividing rules. Home-page research aims use plain columns, and application areas are text rather than badges. Category pills are optional on inner pages; hero labels have no status dot.
+
+The demo reports synthetic key-recovery outcomes and a simulated score. Failure to recover a key in the simulation is not described as proof that a chip is secure. Keep the illustrative and AI-generated asset labels visible.
+
 ## Content sources
 
 - `content/pipeline.ts` is the single source for the five test stages. `/method`, `/chip-testing` and `/demo` all read it.

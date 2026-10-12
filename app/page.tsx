@@ -45,22 +45,23 @@ export default function Home() {
       </Section>
 
       <Section title={PLAIN.heading}>
-        <p className="max-w-3xl text-[clamp(1.25rem,2.4vw,1.625rem)] leading-snug tracking-[-0.01em] text-fg-subtle">
-          {PLAIN.lines.join(" ")} <span className="text-fg">{PLAIN.close}</span>
-        </p>
-        <ul className="mt-10 flex flex-wrap gap-2" aria-label="Who depends on it">
+        <div className="max-w-3xl space-y-4 text-lg leading-relaxed text-fg-muted">
+          <p>{PLAIN.lines.slice(0, 2).join(" ")}</p>
+          <p>{PLAIN.lines[2]} {PLAIN.close}</p>
+        </div>
+        <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2" aria-label="Application areas">
           {BENEFICIARIES.map((b) => (
-            <li key={b} className="rounded-full border border-line-strong px-3 py-1 font-mono text-xs text-fg-muted">
+            <li key={b} className="text-sm text-fg-subtle">
               {b}
             </li>
           ))}
         </ul>
       </Section>
 
-      <Section title="Impact & outcomes" intro={IMPACT.lede}>
-        <div className="grid gap-3 md:grid-cols-3">
+      <Section title={IMPACT.heading} intro={IMPACT.lede}>
+        <div className="grid gap-8 md:grid-cols-3 md:gap-10">
           {IMPACT.outcomes.map((o) => (
-            <div key={o.title} className="rounded-lg border border-line bg-panel p-6">
+            <div key={o.title} className="border-t border-line-strong pt-5">
               <h3 className="text-base font-medium text-fg">{o.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-fg-muted">{o.body}</p>
             </div>

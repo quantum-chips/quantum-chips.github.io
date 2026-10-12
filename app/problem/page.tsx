@@ -9,7 +9,7 @@ export const metadata = { title: "The Problem" };
 export default function Problem() {
   return (
     <main>
-      <PageHeader pill="The problem" title="Quantum computing breaks today’s cryptography. The fix has to reach the chip." />
+      <PageHeader pill="The problem" title="Physical security of post-quantum hardware" />
 
       <Section bordered={false} flushTop>
         <ol className="divide-y divide-line border-y border-line">
@@ -29,8 +29,8 @@ export default function Problem() {
           ))}
         </ol>
         <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3">
-          <TextLink href="/threat-model/">Every known attack path</TextLink>
-          <TextLink href="/method/">How we test for them</TextLink>
+          <TextLink href="/threat-model/">Physical attack review</TextLink>
+          <TextLink href="/method/">Testing methodology</TextLink>
         </div>
       </Section>
     </main>

@@ -14,16 +14,16 @@ const noise = (i: number, seed: number) => {
 const PANELS = [
   {
     title: "Without masking",
-    body: "The power trace stays tied to the secret, so the correct key guess stands out from the rest.",
+    body: "The correct key guess has a higher correlation with the power trace than the other guesses.",
     bars: Array.from({ length: GUESSES }, (_, i) => (i === KEY ? 0.94 : 0.08 + 0.2 * noise(i, 1))),
     result: "Key recovered",
     leak: true,
   },
   {
     title: "With masking",
-    body: "Fresh random values are mixed into every secret-dependent computation, so no single measurement follows the secret.",
+    body: "Fresh randomness reduces the correlation between individual measurements and the secret.",
     bars: Array.from({ length: GUESSES }, (_, i) => 0.08 + 0.22 * noise(i, 2)),
-    result: "No guess stands out",
+    result: "No clear correlation peak",
     leak: false,
   },
 ];

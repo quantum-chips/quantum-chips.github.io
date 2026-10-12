@@ -7,7 +7,7 @@ const LAYERS = [
   { name: "Applications", sub: "Defence & critical systems" },
   { name: "Protocols", sub: "TLS · key exchange · signatures" },
   { name: "Algorithms", sub: "ML-KEM · ML-DSA (NIST PQC)" },
-  { name: "Silicon", sub: "The chip that runs it" },
+  { name: "Silicon", sub: "PQC hardware" },
 ];
 
 // A fixed, hand-shaped leakage profile (no randomness, so server and client render
@@ -22,7 +22,7 @@ export default function StackVisual() {
   return (
     <figure
       role="img"
-      aria-label="The project stack: applications, protocols and algorithms above the silicon layer, which is the module this site presents"
+      aria-label="Project stack: applications, protocols, algorithms and silicon. Chip security testing focuses on the silicon layer."
       className="m-0 overflow-hidden rounded-lg border border-line-strong bg-panel shadow-raised"
     >
       <div className="flex items-center justify-between border-b border-line px-4 py-2.5 font-mono text-xs text-fg-subtle">
@@ -44,7 +44,7 @@ export default function StackVisual() {
               {silicon ? (
                 <span className="inline-flex items-center gap-2 justify-self-start font-mono text-xs text-accent md:justify-self-end">
                   <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
-                  This module
+                  Chip security testing
                 </span>
               ) : (
                 <span aria-hidden className="hidden md:block" />

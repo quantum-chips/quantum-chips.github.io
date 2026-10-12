@@ -83,24 +83,24 @@ export const TRACE_MODELS: { procedure: string; secret: string; reused: string; 
 // The report's own conclusions from the review, in its words where possible.
 export const FINDINGS: { title: string; body: string }[] = [
   {
-    title: "NTT and KECCAK are the recurring targets",
-    body: "Both process secret-dependent or security-critical values in several stages of both algorithms, so they come up again and again across side-channel and fault attacks.",
+    title: "NTT and KECCAK are common targets",
+    body: "Both process secret-dependent or security-critical values at several stages of ML-KEM and ML-DSA. Published side-channel and fault attacks target these operations repeatedly.",
   },
   {
-    title: "Decapsulation is ML-KEM’s widest surface",
+    title: "Most ML-KEM paths target decapsulation",
     body: "Ten of the seventeen ML-KEM attack paths target it: CPA, five side-channel-assisted chosen-ciphertext attacks, a decoding attack and three fault attacks. Some recover a session secret, others the long-term private key.",
   },
   {
-    title: "A reused secret invites statistics",
-    body: "Fresh keys and nonces mostly face single-trace attacks. Static keys — ML-KEM decapsulation with a static key, ML-DSA signing — can be attacked across many traces.",
+    title: "Secret reuse enables multi-trace attacks",
+    body: "Fresh keys and nonces mostly face single-trace attacks. Reused keys in ML-KEM decapsulation and ML-DSA signing can be targeted across many traces.",
   },
   {
-    title: "Some faults forge rather than steal",
-    body: "Verification-stage faults on ML-DSA don’t recover the key: a corrupted NTT or a skipped c = c̄ comparison can make an invalid or forged signature pass.",
+    title: "Verification faults can enable forgery",
+    body: "In ML-DSA verification, a corrupted NTT or a skipped c = c̄ comparison can cause an invalid or forged signature to be accepted without recovering the key.",
   },
   {
-    title: "Every attack needs its own test",
-    body: "Some need a profiling clone and high-SNR traces; CPA needs no profiling but many traces. Different setups, measurements and success criteria — hence a checklist, not a single score.",
+    title: "Test requirements vary by attack",
+    body: "Some attacks require a profiling clone and high-SNR traces; CPA requires no profiling but uses many traces. The checklist records the setup, measurements and success criteria for each attack.",
   },
 ];
 

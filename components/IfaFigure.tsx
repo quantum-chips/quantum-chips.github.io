@@ -1,10 +1,10 @@
 // Ineffective fault analysis on ML-KEM decapsulation, step by step. Adapted from
 // Figure 6 of the Milestone 1 report.
 const STEPS = [
-  { title: "Send a valid ciphertext", body: "Nothing about the input looks unusual." },
+  { title: "Send a valid ciphertext", body: "Use a valid ML-KEM ciphertext as the input." },
   { title: "Inject a fault during decoding", body: "Timed to hit one bit of the message being decoded." },
-  { title: "Watch the outcome", body: "Decapsulation either succeeds or fails." },
-  { title: "Infer, then repeat", body: "Each outcome is one constraint on the private key; enough of them recover it." },
+  { title: "Observe decapsulation", body: "Record whether decapsulation succeeds or fails." },
+  { title: "Collect key constraints", body: "Each outcome constrains the private key. Repeated observations can enable key recovery." },
 ];
 
 export default function IfaFigure() {
@@ -36,8 +36,8 @@ export default function IfaFigure() {
         </p>
       </div>
       <figcaption id="ifa-caption" className="mt-3 text-[13px] leading-relaxed text-fg-subtle">
-        Ineffective fault analysis on ML-KEM decapsulation. The attacker never sees the faulty value — only whether
-        the fault mattered, and that yes/no is the leak. Adapted from Figure 6 of the Milestone 1 report.
+        Ineffective fault analysis on ML-KEM decapsulation. Success and failure reveal information about the
+        private key without exposing the faulty value. Adapted from Figure 6 of the Milestone 1 report.
       </figcaption>
     </figure>
   );

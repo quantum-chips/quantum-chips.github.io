@@ -9,7 +9,7 @@ export default function PageHeader({
   lede,
   children,
 }: {
-  pill: string;
+  pill?: string;
   title: string;
   lede?: React.ReactNode;
   children?: React.ReactNode;
@@ -17,8 +17,8 @@ export default function PageHeader({
   return (
     <section className="hero-mesh">
       <Container className="pb-14 pt-16 md:pb-20 md:pt-24">
-        <Pill>{pill}</Pill>
-        <h1 className="mt-6 max-w-3xl text-[clamp(2.25rem,4.8vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
+        {pill && <Pill>{pill}</Pill>}
+        <h1 className={`${pill ? "mt-6 " : ""}max-w-3xl text-[clamp(2.25rem,4.8vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em]`}>
           <Headline text={title} />
         </h1>
         {lede && <div className="mt-5 max-w-2xl text-lg leading-relaxed text-fg-muted">{lede}</div>}

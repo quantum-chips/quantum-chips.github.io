@@ -23,12 +23,12 @@ export default function VerdictPanel({
     dot = "bg-accent";
     bar = "bg-accent";
   } else if (v.status === "secure") {
-    label = "No exploitable leakage (> 1,000,000 traces)";
+    label = "Key not recovered in this simulation";
     tone = "text-fg";
     dot = "border border-fg";
     bar = "bg-fg-muted";
   } else {
-    label = `Acquiring — ${Math.round(v.confidence * 100)}% toward recovery`;
+    label = "Key not recovered at this trace count";
     tone = "text-fg-muted";
     dot = "animate-pulse bg-fg-muted";
     bar = "bg-fg-muted";
@@ -36,9 +36,9 @@ export default function VerdictPanel({
 
   return (
     <div className="rounded-md border border-line bg-raised p-4">
-      <div className="flex items-center justify-between font-mono text-[11px] text-fg-subtle">
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 font-mono text-[11px] text-fg-subtle">
         <span>Verdict · Chip {chip}</span>
-        <span>conf {v.confidence.toFixed(2)}</span>
+        <span>Simulated score {v.confidence.toFixed(2)}</span>
       </div>
       <p className={`mt-2.5 flex items-start gap-2 text-[15px] font-medium leading-snug ${tone}`}>
         <span aria-hidden className={`mt-[7px] h-2 w-2 shrink-0 rounded-full ${dot}`} />

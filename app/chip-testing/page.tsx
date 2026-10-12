@@ -24,7 +24,7 @@ export default function ChipTesting() {
               {CHIP_HERO.cta.label} <span aria-hidden>→</span>
             </ButtonLink>
             <ButtonLink href="/method/" variant="secondary">
-              How it works
+              Testing methodology
             </ButtonLink>
           </>
         }
@@ -33,23 +33,23 @@ export default function ChipTesting() {
       </Hero>
 
       <Section
-        title="Built for the chip as it ships"
-        intro="The target is a secure element sealed inside a USB-form-factor device, not a bare die or a development board. That is harder to measure, and closer to what an attacker actually gets."
+        title="Testing packaged devices"
+        intro="The target is a secure element inside a USB-form-factor device. Testing through the device packaging introduces measurement constraints that are relevant to attacks on deployed hardware."
       >
         <BenchFigure />
       </Section>
 
-      <Section title="Why it needs testing">
+      <Section title="The case for hardware testing">
         <StatBand stats={PROBLEM_STATS} />
         <div className="mt-6">
-          <TextLink href="/problem/">The problem in full</TextLink>
+          <TextLink href="/problem/">Research background</TextLink>
         </div>
       </Section>
 
       {/* One line per stage from content/pipeline.ts; the full text lives on /method. */}
       <Section
-        title="How we test"
-        intro="Every attack in the threat model becomes a test case. Side-channel cases run through five stages; the two that normally need a specialist’s hand — aligning traces and deciding what to attack — are learned by neural networks."
+        title="Testing approach"
+        intro="The threat model defines the attacks to evaluate. The proposed side-channel workflow has five stages, with neural networks supporting trace alignment and leakage analysis."
       >
         <StepFlow />
         <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
@@ -60,7 +60,7 @@ export default function ChipTesting() {
 
       <Section
         title="Progress"
-        intro="Milestone 1 is delivered: the threat model and the evaluation framework every test is built from."
+        intro="Milestone 1 is complete, covering the threat model and evaluation framework. The next stage is to develop reproducible, automated test procedures."
       >
         <Milestones />
       </Section>

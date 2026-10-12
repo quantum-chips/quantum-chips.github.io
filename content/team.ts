@@ -43,7 +43,7 @@ export const TEAM: Member[] = [
     name: "Mr Chen Feng Chang",
     role: "Industry Partner",
     org: "SEMICON TREND PTY LTD",
-    bio: "Industry partner from SEMICON TREND PTY LTD, supporting the project's pathway toward real-world testing of quantum-safe chips.",
+    bio: "Represents SEMICON TREND PTY LTD in the project's work on testing quantum-safe chips.",
     initials: "CC",
   },
   {
@@ -59,7 +59,7 @@ export const TEAM: Member[] = [
     name: "Dr Zihan Wang",
     role: "Postdoctoral Research Fellow",
     org: "The University of Queensland",
-    bio: "Postdoctoral Research Fellow in the School of Electrical Engineering and Computer Science at UQ. His research focuses on AI usage control — governing how trained models and their training data can be reused, repurposed or queried after release.",
+    bio: "Postdoctoral Research Fellow in the School of Electrical Engineering and Computer Science at UQ. His research focuses on controlling how trained AI models and their training data can be reused, repurposed or queried after release.",
     initials: "ZW",
     photo: "/team/zihan-wang.jpg",
     profileUrl: "https://www.zihan.com.au/",

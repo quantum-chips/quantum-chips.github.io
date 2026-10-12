@@ -16,7 +16,7 @@ describe("RunPanel", () => {
 
   it("links through to the interactive test bench", () => {
     render(<RunPanel />);
-    expect(screen.getByRole("link", { name: /run it yourself/i })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /open demo/i })).toHaveAttribute(
       "href",
       // next/link drops the trailing slash outside the Next build (trailingSlash is a build option).
       expect.stringMatching(/^\/demo\/?$/),

@@ -10,15 +10,15 @@ describe("Demo page", () => {
     render(<Demo />);
     expect(screen.getByText(/illustrative simulation/i)).toBeInTheDocument();
   });
-  it("explains why the masked chip holds", () => {
+  it("explains masking and first-order leakage", () => {
     render(<Demo />);
     expect(screen.getByRole("figure", { name: /masking/i })).toBeInTheDocument();
   });
-  it("flips the verdict to secure when Chip B is selected", async () => {
+  it("shows the simulated non-recovery result when Chip B is selected", async () => {
     const user = userEvent.setup();
     render(<Demo />);
     await user.click(screen.getByRole("button", { name: /chip b/i }));
-    expect(screen.getByText(/no exploitable leakage/i)).toBeInTheDocument();
+    expect(screen.getByText(/key not recovered in this simulation/i)).toBeInTheDocument();
   });
 });
 

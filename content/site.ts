@@ -1,32 +1,32 @@
 // Project-level hero (home page = the umbrella project).
 export const HERO = {
   // Kept short: a longer eyebrow wraps to two lines in the hero column.
-  eyebrow: "A QDSA defence research project",
-  title: "Security-critical systems are going quantum-safe. We make sure they actually are.",
+  eyebrow: "UQ · QDSA Collaborative Research Grant",
+  title: "Testing post-quantum cryptography for critical systems",
   lede:
-    "A University of Queensland–led project under the Queensland Defence Science Alliance, accelerating the transition to post-quantum cryptography for security-critical and defence applications.",
-  cta: { label: "Explore the chip module", href: "/chip-testing/" },
+    "A University of Queensland–led research project on the security of post-quantum cryptography in defence and other security-critical applications.",
+  cta: { label: "Chip testing research", href: "/chip-testing/" },
 };
 
 // Submodule hero (the chip-testing module landing).
 export const CHIP_HERO = {
-  eyebrow: "Module · Chip Security Testing",
-  title: "We break tomorrow’s chips before tomorrow does.",
+  eyebrow: "Chip Security Testing",
+  title: "Testing quantum-safe chips against physical attacks",
   lede:
-    "This module tests new-generation quantum-safe chips against side-channel and fault-injection attacks, with neural networks reading the measurements — finding the weaknesses an attacker would, today.",
-  cta: { label: "Open the test bench", href: "/demo/" },
+    "We are developing automated side-channel and fault-injection tests for chips running post-quantum cryptography, using neural networks to analyse power and electromagnetic measurements.",
+  cta: { label: "Try the test bench demo", href: "/demo/" },
 };
 
 // Plain-language case for non-experts. `close` is the project's own line and is set
 // apart from the setup sentences.
 export const PLAIN = {
-  heading: "Why it matters",
+  heading: "Why hardware security matters",
   lines: [
     "Encryption keeps your bank transfers, health records and government communications private.",
-    "A powerful quantum computer could one day break the encryption we use today — and attackers are already storing scrambled data now to unscramble it later.",
-    "The fix is a new generation of “quantum-safe” chips. But even with unbreakable maths, a chip can quietly leak its secret keys through tiny physical signals such as its power use.",
+    "Future quantum computers could break widely used public-key cryptography, putting long-lived confidential data at risk.",
+    "Post-quantum algorithms address that threat, but chips running them can still reveal secret keys through power consumption, electromagnetic emissions or timing.",
   ],
-  close: "We find those leaks automatically, so flawed chips never reach the systems people depend on.",
+  close: "This project develops methods to detect and assess those weaknesses before deployment.",
 };
 
 export const BENEFICIARIES: string[] = [
@@ -43,22 +43,22 @@ export const PROBLEM_STATS: { value: string; label: string }[] = [
 ];
 
 export const IMPACT = {
-  heading: "Impact & outcomes",
-  lede: "If quantum-safe chips ship with hidden side-channel leaks, the move to post-quantum security fails quietly: the maths is sound, but the secrets still escape. This project makes that failure visible and fixable, automatically.",
+  heading: "Research aims",
+  lede: "The chip-testing work focuses on repeatable measurements, attack evaluation and a prototype for use with industry partners.",
   outcomes: [
     {
-      title: "Faster, repeatable assurance",
-      body: "Automated testing turns a slow, expert-only audit into a process that can run early and often, so weak chips are caught before they ship.",
+      title: "Automated testing",
+      body: "Reduce manual work in trace alignment and leakage analysis so tests can be repeated as chip designs change.",
     },
     {
-      title: "A clear security result",
-      body: "Every chip gets evidence: whether a secret key can be recovered, how easily, and where on the chip it leaks.",
+      title: "Measurable attack results",
+      body: "Record whether an attack recovers a key, how many traces it needs and where leakage occurs. Compare results with and without countermeasures.",
     },
     {
-      title: "A path to market",
-      body: "Developed with industry partner SEMICON TREND to move from a research prototype toward a tool the semiconductor industry can adopt.",
+      title: "Industry evaluation",
+      body: "Work with SEMICON TREND to develop and evaluate a testing prototype for semiconductor applications.",
     },
   ],
   // trailingSlash is on in next.config.ts, so the fragment must follow the slash.
-  cta: { label: "Discuss a collaboration", href: "/resources/#contact" },
+  cta: { label: "Contact the team", href: "/resources/#contact" },
 };

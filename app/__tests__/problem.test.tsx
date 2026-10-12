@@ -9,7 +9,7 @@ describe("Problem page", () => {
   });
   it("renders a heading about side channels", () => {
     render(<Problem />);
-    expect(screen.getByRole("heading", { name: /side channels/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /side-channel attacks/i })).toBeInTheDocument();
   });
   it("covers fault injection as well as side channels", () => {
     render(<Problem />);

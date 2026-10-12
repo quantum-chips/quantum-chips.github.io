@@ -10,8 +10,8 @@ export default function Resources() {
     <main>
       <PageHeader
         pill="Resources"
-        title="The field this project builds on."
-        lede="Quantum-safe algorithms are standardised and the first chips that implement them are shipping. What is missing is a rigorous way to test that silicon against physical attacks. Below: the terms, how the field arrived here, the chips now in scope, and the literature we build on."
+        title="Background and resources"
+        lede="Key terms, research milestones, hardware examples and literature relevant to physical-attack testing of post-quantum hardware."
       />
 
       <Section title="Key terms" bordered={false} flushTop>
@@ -30,7 +30,7 @@ export default function Resources() {
         </dl>
       </Section>
 
-      <Section title="How the field got here">
+      <Section title="Key milestones">
         <ol className="divide-y divide-line border-y border-line">
           {MILESTONES.map((m) => (
             <li key={m.date} className="grid gap-1 py-4 sm:grid-cols-[9rem_1fr] sm:gap-8">
@@ -41,7 +41,7 @@ export default function Resources() {
         </ol>
       </Section>
 
-      <Section title="Quantum-safe chips in the wild" intro="The class of targets this project is built to evaluate.">
+      <Section title="Post-quantum hardware" intro="Examples of the hardware this project aims to evaluate.">
         <div className="grid gap-3 md:grid-cols-3">
           {HARDWARE.map((h) => (
             <a
@@ -89,7 +89,7 @@ export default function Resources() {
         </div>
       </Section>
 
-      <Section title="Open directions">
+      <Section title="Research directions">
         <ol className="grid gap-3 md:grid-cols-3">
           {DIRECTIONS.map((d, i) => (
             <li key={d} className="rounded-lg border border-line p-5">
@@ -100,25 +100,14 @@ export default function Resources() {
         </ol>
       </Section>
 
-      {/* Contact — target of the "Discuss a collaboration" CTAs (/resources/#contact).
-          TODO: replace the pending state below with the real address, e.g.
-            <a href="mailto:someone@uq.edu.au">someone@uq.edu.au</a>
-          Until then this deliberately reads as "not yet published" rather than
-          leaving editorial instructions visible on a public page. */}
       <Section id="contact" title="Contact">
         <div className="rounded-lg border border-line-strong bg-panel p-6 md:p-8">
           <p className="max-w-2xl text-lg leading-relaxed text-fg">
-            We welcome enquiries from industry partners, government stakeholders and researchers — on
-            physical-attack evaluation of quantum-safe silicon, collaboration on the testing framework, or the
-            wider transition programme.
-          </p>
-          <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-line-strong px-3 py-1 font-mono text-xs text-fg-muted">
-            <span aria-hidden className="h-1.5 w-1.5 rounded-full border border-fg-muted" />
-            Contact details to be published
+            For enquiries about hardware testing, the evaluation framework or research collaboration, contact
+            the project team.
           </p>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-fg-muted">
-            In the meantime, please reach the team via the University of Queensland&apos;s Cyber Research Centre, or
-            through the investigator profiles on the{" "}
+            Contact information is available through the investigator profiles on the{" "}
             <Link href="/team/" className="text-fg underline underline-offset-4">
               team page
             </Link>

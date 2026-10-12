@@ -68,7 +68,7 @@ export default function RunPanel() {
               {[
                 ["Verdict", "Key recovered"],
                 ["Traces", `~${v.tracesToRecover?.toLocaleString("en-US")}`],
-                ["Confidence", v.confidence.toFixed(2)],
+                ["Simulated score", v.confidence.toFixed(2)],
               ].map(([k, val], i) => (
                 <div key={k} className="bg-panel p-2.5">
                   <dt className="font-mono text-[10px] uppercase tracking-wider text-fg-subtle">{k}</dt>
@@ -82,7 +82,7 @@ export default function RunPanel() {
       <figcaption className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[13px] text-fg-subtle">
         <span>Illustrative run of the test bench: Chip {CHIP}, unprotected, {ALGO}.</span>
         <Link href="/demo/" className="text-fg-muted underline-offset-4 transition-colors hover:text-fg hover:underline">
-          Run it yourself →
+          Open demo →
         </Link>
       </figcaption>
     </figure>

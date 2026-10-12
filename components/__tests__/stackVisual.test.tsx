@@ -13,6 +13,6 @@ describe("StackVisual", () => {
     for (const layer of ["Applications", "Protocols", "Algorithms", "Silicon"]) {
       expect(screen.getByText(layer)).toBeInTheDocument();
     }
-    expect(screen.getByText(/this module/i)).toBeInTheDocument();
+    expect(screen.getByText(/chip security testing/i)).toBeInTheDocument();
   });
 });
