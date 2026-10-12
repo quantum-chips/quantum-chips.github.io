@@ -31,12 +31,15 @@ Notes:
 - A custom domain works too: add it under Settings → Pages and a `CNAME`.
 
 ## Structure
-- `app/` — routes (/, /problem, /demo, /method, /team, /resources)
+- `app/` — routes (/, /chip-testing, /problem, /threat-model, /method, /demo, /team, /resources)
 - `components/` — layout + demo widgets
-- `content/` — editable page copy and data (team, milestones, reading)
+- `content/` — editable page copy and data. `pipeline.ts` is the single source for
+  the five test stages; `threats.ts`, `framework.ts` and `milestones.ts` come from
+  the Milestone 1 report.
 - `lib/` — seeded simulation (`sidechannel-sim.ts`), RNG, color ramp
+- Design system: `docs/superpowers/specs/2026-10-12-site-redesign.md`
 
 ## Notes
 - All demo figures are synthetic simulations, clearly labelled. Replace the
   generators in `lib/sidechannel-sim.ts` with real trace data to go live.
-- Team roster, lab name, and logo are placeholders.
+- Contact details on /resources#contact are still to be published.
