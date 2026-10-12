@@ -64,6 +64,12 @@ export const READING: { category: string; items: Ref[] }[] = [
         note: "Why data with a long shelf life is already exposed.",
       },
       {
+        title: "Quantum Threat Timeline Report 2025",
+        where: "Global Risk Institute · Mosca & Piani · 2026",
+        href: "https://globalriskinstitute.org/publication/quantum-threat-timeline-report-2025b/",
+        note: "26 experts: a cryptographically relevant quantum computer is likely (51–70%) within 15 years.",
+      },
+      {
         title: "How to factor 2048-bit RSA in 8 hours using 20 million noisy qubits",
         where: "Gidney & Ekerå · arXiv 1905.09749",
         href: "https://arxiv.org/abs/1905.09749",
@@ -155,7 +161,7 @@ export const READING: { category: string; items: Ref[] }[] = [
 ];
 
 export const DIRECTIONS: string[] = [
-  "A standardised, reproducible side-channel test methodology for PQC hardware — the gap this project targets.",
+  "A standardised, reproducible side-channel and fault-injection test methodology for PQC hardware — the gap this project targets.",
   "Masking and constant-time implementations at acceptable area and energy cost.",
   "Crypto-agility in silicon: swapping algorithms without re-spinning hardware if a scheme is broken.",
 ];
@@ -173,6 +179,10 @@ export const GLOSSARY: { term: string; def: string }[] = [
   {
     term: "Side-channel attack",
     def: "Stealing secrets not by breaking the maths, but by measuring a chip's physical signals — power use, electromagnetic waves or timing.",
+  },
+  {
+    term: "Fault-injection attack",
+    def: "Disturbing a chip while it computes — for example with a precisely timed electromagnetic pulse — to corrupt a result or skip a security check.",
   },
   {
     term: "Harvest now, decrypt later",

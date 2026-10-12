@@ -1,5 +1,5 @@
-import Container from "@/components/Container";
-import Eyebrow from "@/components/Eyebrow";
+import PageHeader from "@/components/PageHeader";
+import Section from "@/components/Section";
 import { TEAM } from "@/content/team";
 import { BASE_PATH } from "@/lib/site";
 
@@ -8,46 +8,51 @@ export const metadata = { title: "Team" };
 export default function Team() {
   return (
     <main>
-      <Container className="py-20">
-        <Eyebrow index="05">People</Eyebrow>
-        <h1 className="mt-5 font-display text-4xl font-bold tracking-tight md:text-5xl">The team</h1>
-        <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-graphite">
-          The chip-testing module is led from the University of Queensland&apos;s Cyber Research Centre,
-          with industry partner SEMICON TREND — part of the QDSA-funded &ldquo;Transitioning to
-          Quantum-Safe&rdquo; project.
-        </p>
-        <div className="mt-12 grid gap-5 sm:grid-cols-2">
+      <PageHeader
+        pill="Team"
+        title="The people behind it."
+        lede={
+          <>
+            The chip-testing module is led from the University of Queensland&apos;s Cyber Research Centre, with
+            industry partner SEMICON TREND — part of the QDSA-funded &ldquo;Transitioning to Quantum-Safe&rdquo;
+            project.
+          </>
+        }
+      />
+
+      <Section bordered={false} flushTop>
+        <div className="grid gap-3 md:grid-cols-2">
           {TEAM.map((m) => (
-            <article key={m.name} className="flex gap-5 border border-hairline/70 bg-surface p-6 shadow-card">
+            <article key={m.name} className="flex gap-5 rounded-lg border border-line bg-panel p-6">
               {m.photo ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={`${BASE_PATH}${m.photo}`}
                   alt={`Portrait of ${m.name}`}
-                  width={76}
-                  height={76}
+                  width={72}
+                  height={72}
                   loading="lazy"
-                  className="h-[76px] w-[76px] shrink-0 border border-hairline object-cover"
+                  className="h-[72px] w-[72px] shrink-0 rounded-md object-cover"
                 />
               ) : (
                 <div
                   aria-hidden
-                  className="flex h-[76px] w-[76px] shrink-0 items-center justify-center border border-hairline bg-gradient-to-br from-paper to-hairline/50 font-display text-lg font-bold tracking-tight text-graphite"
+                  className="flex h-[72px] w-[72px] shrink-0 items-center justify-center rounded-md border border-line-strong bg-raised text-base font-medium text-fg-muted"
                 >
                   {m.initials}
                 </div>
               )}
               <div className="min-w-0">
-                <h2 className="font-display text-lg font-semibold tracking-tight">{m.name}</h2>
-                <p className="mt-0.5 font-mono text-xs uppercase tracking-wide text-instrument">{m.role}</p>
-                <p className="font-mono text-[11px] uppercase tracking-wide text-graphite">{m.org}</p>
-                <p className="mt-2 text-sm leading-relaxed text-graphite">{m.bio}</p>
+                <h2 className="text-base font-medium text-fg">{m.name}</h2>
+                <p className="mt-0.5 text-sm text-fg-muted">{m.role}</p>
+                <p className="font-mono text-[11px] text-fg-subtle">{m.org}</p>
+                <p className="mt-3 text-sm leading-relaxed text-fg-muted">{m.bio}</p>
                 {m.profileUrl && (
                   <a
                     href={m.profileUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-2 inline-block font-mono text-xs text-instrument underline-offset-4 hover:underline"
+                    className="mt-3 inline-block text-sm text-fg-subtle underline-offset-4 transition-colors hover:text-fg hover:underline"
                   >
                     Profile →
                   </a>
@@ -56,7 +61,7 @@ export default function Team() {
             </article>
           ))}
         </div>
-      </Container>
+      </Section>
     </main>
   );
 }

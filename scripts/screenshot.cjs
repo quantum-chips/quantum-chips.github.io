@@ -10,7 +10,9 @@ const CHROME =
 const OUT = "screenshots";
 const routes = [
   ["home", "/"],
+  ["chip-testing", "/chip-testing"],
   ["problem", "/problem"],
+  ["threat-model", "/threat-model"],
   ["demo", "/demo"],
   ["method", "/method"],
   ["team", "/team"],

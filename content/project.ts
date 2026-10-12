@@ -8,7 +8,7 @@ export const PROJECT = {
   mission:
     "The project accelerates the move of security-critical and defence systems to post-quantum cryptography, and rigorously tests that the transition stays resilient against future quantum threats.",
   moduleNote:
-    "This site presents one module of the project: side-channel security testing of quantum-safe chips — the hardware layer that runs the new cryptography.",
+    "This site presents one module of the project: side-channel and fault-injection testing of quantum-safe chips — the hardware layer that runs the new cryptography.",
   funding:
     "Funded under the 2024 QDSA Collaborative Research Grants — part of a round investing more than A$3.6M across Queensland and the Northern Territory over 18 months.",
   facts: [

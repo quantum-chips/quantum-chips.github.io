@@ -1,12 +1,16 @@
 "use client";
-import { useState } from "react";
-import Container from "@/components/Container";
-import Eyebrow from "@/components/Eyebrow";
+import { useEffect, useRef, useState } from "react";
+import PageHeader from "@/components/PageHeader";
+import Section from "@/components/Section";
+import Segmented from "@/components/Segmented";
 import Heatmap from "@/components/demo/Heatmap";
 import CpaMatrix from "@/components/demo/CpaMatrix";
 import TraceViewer from "@/components/demo/TraceViewer";
 import VerdictPanel from "@/components/demo/VerdictPanel";
+import MaskingFigure from "@/components/MaskingFigure";
 import { computeVerdict, recoveryThreshold, type ChipId, type Algorithm } from "@/lib/sidechannel-sim";
+import { HEAT_STOPS } from "@/lib/colorRamp";
+import { PIPELINE, demoAnchor } from "@/content/pipeline";
 
 // Slider position 0..100 -> trace count on a log scale up to 1e6.
 function posToTraces(pos: number): number {
@@ -14,24 +18,56 @@ function posToTraces(pos: number): number {
   return Math.round(Math.pow(10, (pos / 100) * 6));
 }
 
-// The five-stage testing pipeline (mirrors the Method page).
-const STAGES = [
-  { n: "01", name: "Acquire", anchor: "stage-01" },
-  { n: "02", name: "Align", anchor: null },
-  { n: "03", name: "Analyze", anchor: "stage-03" },
-  { n: "04", name: "Localize", anchor: "stage-04" },
-  { n: "05", name: "Verdict", anchor: "stage-05" },
-];
+// Autoplay: sweep Chip A from 1 trace to a million (it gives up its key around
+// 2,100), rest, then do the same for the masked Chip B (it never does), and loop.
+const TICK_MS = 80;
+const SWEEP = 100; // slider steps per sweep
+const HOLD = 15; // ticks to rest on the end of each sweep
+const PHASE = SWEEP + 1 + HOLD;
 
-function Readout({ k, v, accent }: { k: string; v: string; accent?: boolean }) {
+function frameAt(tick: number): { chip: ChipId; pos: number } {
+  const t = tick % (2 * PHASE);
+  return { chip: t < PHASE ? "A" : "B", pos: Math.min(t % PHASE, SWEEP) };
+}
+
+// Assume reduced motion until the browser says otherwise, so nothing moves before
+// hydration — or at all, for visitors who asked for less motion.
+function usePrefersReducedMotion(): boolean {
+  const [reduce, setReduce] = useState(true);
+  useEffect(() => {
+    const mq = typeof window.matchMedia === "function" ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+    setReduce(mq ? mq.matches : false);
+    if (!mq) return;
+    const onChange = (e: MediaQueryListEvent) => setReduce(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+  return reduce;
+}
+
+function PlayIcon({ playing }: { playing: boolean }) {
   return (
-    <div className="bg-surface p-3">
-      <div className="font-mono text-[10px] uppercase tracking-widest text-graphite">{k}</div>
-      <div className={`mt-1 font-mono text-sm ${accent ? "text-instrument" : "text-ink"}`}>{v}</div>
-    </div>
+    <svg viewBox="0 0 10 10" className="h-2.5 w-2.5" aria-hidden>
+      {playing ? (
+        <path d="M2 1h2v8H2zM6 1h2v8H6z" fill="currentColor" />
+      ) : (
+        <path d="M2.5 1l6 4-6 4z" fill="currentColor" />
+      )}
+    </svg>
   );
 }
 
+// The shared pipeline, with the output panel on this page each stage jumps to.
+const STAGES = PIPELINE.map((s) => ({ n: s.n, name: s.title, anchor: demoAnchor(s.n) }));
+
+const CHIPS: { id: ChipId; note: string }[] = [
+  { id: "A", note: "unprotected" },
+  { id: "B", note: "masked" },
+];
+
+const LEGEND = `linear-gradient(90deg, ${HEAT_STOPS.map((c) => `rgb(${c.join(",")})`).join(", ")})`;
+
+// One stage's output, as a screen inside the app window.
 function Screen({
   stage,
   label,
@@ -46,242 +82,269 @@ function Screen({
   children: React.ReactNode;
 }) {
   return (
-    <div id={`stage-${stage}`} className="scroll-mt-24 overflow-hidden border border-ink/15 bg-[#0C1116] shadow-card">
-      <div className="flex items-center justify-between border-b border-white/10 px-3 py-2 font-mono text-[11px] uppercase tracking-widest text-white/55">
+    <div id={`stage-${stage}`} className="scroll-mt-24 overflow-hidden rounded-md border border-line bg-raised">
+      <div className="flex items-center justify-between border-b border-line px-3 py-2 font-mono text-[11px] text-fg-subtle">
         <span>{label}</span>
-        {meta && <span className="text-instrument">{meta}</span>}
+        {meta && <span>{meta}</span>}
       </div>
-      <div className="p-4">{children}</div>
-      {footer && (
-        <div className="border-t border-white/10 px-3 py-2 font-mono text-[10px] text-white/45">{footer}</div>
-      )}
+      <div className="p-3">{children}</div>
+      {footer && <div className="border-t border-line px-3 py-2 font-mono text-[11px] text-fg-subtle">{footer}</div>}
     </div>
   );
+}
+
+function wordFor(status: "leak" | "secure" | "pending") {
+  return status === "leak" ? "key recovered" : status === "secure" ? "secure" : "analysing";
 }
 
 export default function Demo() {
   const [chip, setChip] = useState<ChipId>("A");
   const [algo, setAlgo] = useState<Algorithm>("ML-KEM");
-  const [pos, setPos] = useState(57); // ~2,600 traces (just past recovery)
+  // Before autoplay starts (and with reduced motion) the page rests here: ~2,600
+  // traces, just past recovery.
+  const [pos, setPos] = useState(57);
+  const [playing, setPlaying] = useState(false);
+  const reduceMotion = usePrefersReducedMotion();
+  const tick = useRef(0);
+  const autoStarted = useRef(false);
+
+  // Start once, as soon as we know motion is welcome; stop if that changes.
+  useEffect(() => {
+    if (reduceMotion) {
+      setPlaying(false);
+      return;
+    }
+    if (autoStarted.current) return;
+    autoStarted.current = true;
+    tick.current = 0;
+    setChip("A");
+    setPos(0);
+    setPlaying(true);
+  }, [reduceMotion]);
+
+  useEffect(() => {
+    if (!playing) return;
+    const id = window.setInterval(() => {
+      tick.current += 1;
+      const f = frameAt(tick.current);
+      setChip(f.chip);
+      setPos(f.pos);
+    }, TICK_MS);
+    return () => window.clearInterval(id);
+  }, [playing]);
+
+  // Resume from whatever is on screen.
+  const togglePlay = () => {
+    if (!playing) tick.current = (chip === "A" ? 0 : PHASE) + pos;
+    setPlaying(!playing);
+  };
+
   const traceCount = posToTraces(pos);
   const verdict = computeVerdict(chip, traceCount, algo);
-  const algoNote = algo === "ML-KEM" ? "key encapsulation (Kyber)" : "digital signatures (Dilithium)";
   const showBox = chip === "A" && verdict.recovered;
-  const status =
-    verdict.status === "leak" ? "KEY RECOVERED" : verdict.status === "secure" ? "SECURE — HOLDING" : "ACQUIRING";
-  const verdictWord =
-    verdict.status === "leak" ? "key recovered" : verdict.status === "secure" ? "secure" : "analysing";
-  const verdictTone =
-    verdict.status === "leak"
-      ? "border-[#D44842] text-[#D44842]"
-      : verdict.status === "secure"
-        ? "border-instrument text-instrument"
-        : "border-graphite text-graphite";
 
   return (
     <main>
-      <Container className="py-16">
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <Eyebrow index="03">Side-channel test bench</Eyebrow>
-          <span className="border border-[#F6A21E] px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-[#F6A21E]">
-            ⚠ Illustrative simulation
-          </span>
-        </div>
-        <h1 className="mt-5 text-balance font-display text-4xl font-bold tracking-tight md:text-5xl">
-          See which chip leaks its key.
-        </h1>
-        <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-graphite">
-          The chip runs two NIST algorithms — ML-KEM (key exchange) and ML-DSA (signatures), which leak
-          differently. Pick an algorithm and a chip, then sweep the traces and watch the testing pipeline run.
-        </p>
+      <PageHeader
+        pill="Test bench · illustrative simulation"
+        title="See which chip leaks its key."
+        lede="Chip A has no protection; Chip B is masked. Watch the attacker listen for longer and longer: the unprotected chip eventually gives up its key, the masked one never does. Take over at any point — both chips run ML-KEM (key exchange) and ML-DSA (signatures), which leak differently."
+      />
 
-        <div className="mt-6 border-l-2 border-uqpurple bg-surface p-5 shadow-card">
-          <div className="font-mono text-xs uppercase tracking-[0.2em] text-uqpurple">What you&apos;re seeing</div>
-          <p className="mt-3 max-w-3xl text-pretty leading-relaxed text-ink">
-            Chip A has no protection; Chip B is hardened. Drag the slider to let an attacker &ldquo;listen&rdquo;
-            to the chip for longer. The unprotected chip eventually gives up its secret key; the protected one
-            never does. Our project automates this whole pipeline, so a chip can be certified before it is trusted.
-          </p>
-        </div>
-
-        {/* Control deck */}
-        <div className="mt-8 grid gap-px overflow-hidden border border-hairline bg-hairline shadow-card md:grid-cols-2">
-          <div className="bg-surface p-6">
-            <div className="font-mono text-[10px] uppercase tracking-widest text-graphite">Algorithm</div>
-            <div role="group" aria-label="Select algorithm under test" className="mt-2 inline-flex border border-hairline">
-              {(["ML-KEM", "ML-DSA"] as Algorithm[]).map((a, i) => (
-                <button
-                  key={a}
-                  onClick={() => setAlgo(a)}
-                  aria-pressed={algo === a}
-                  className={`px-4 py-2 font-mono text-sm transition-colors duration-200 ${
-                    i > 0 ? "border-l border-hairline" : ""
-                  } ${algo === a ? "bg-instrument text-paper" : "text-graphite hover:text-ink"}`}
-                >
-                  {a}
-                </button>
-              ))}
-            </div>
-            <div className="mt-2 font-mono text-[11px] text-graphite">{algoNote}</div>
-
-            <div className="mt-6 font-mono text-[10px] uppercase tracking-widest text-graphite">Chip under test</div>
-            <div role="group" aria-label="Select chip under test" className="mt-2 inline-flex border border-hairline">
-              {(["A", "B"] as ChipId[]).map((c, i) => (
-                <button
-                  key={c}
-                  onClick={() => setChip(c)}
-                  aria-pressed={chip === c}
-                  className={`px-4 py-2 font-mono text-sm transition-colors duration-200 ${
-                    i > 0 ? "border-l border-hairline" : ""
-                  } ${chip === c ? "bg-instrument text-paper" : "text-graphite hover:text-ink"}`}
-                >
-                  Chip {c} — {c === "A" ? "unprotected" : "masked"}
-                </button>
-              ))}
-            </div>
-
-            <label className="mt-6 block">
-              <div className="flex items-baseline justify-between font-mono text-xs text-graphite">
-                <span>Traces captured</span>
-                <span className="text-base text-ink">{traceCount.toLocaleString()}</span>
-              </div>
-              <input
-                type="range"
-                min={0}
-                max={100}
-                value={pos}
-                onChange={(e) => setPos(Number(e.target.value))}
-                aria-label="Traces captured"
-                className="mt-2 w-full accent-instrument"
-              />
-              <div className="mt-1 flex justify-between font-mono text-[10px] text-graphite/70">
-                <span>1</span>
-                <span>1,000,000</span>
-              </div>
-            </label>
+      <Section bordered={false} flushTop>
+        <div className="overflow-hidden rounded-lg border border-line-strong bg-panel shadow-raised">
+          <div className="flex items-center justify-between gap-4 border-b border-line px-4 py-2.5 font-mono text-xs text-fg-subtle">
+            <span className="flex items-center gap-2">
+              {playing && <span aria-hidden className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />}
+              Run · Chip {chip} · {algo}
+            </span>
+            <span className="flex items-center gap-3">
+              <span className="hidden sm:inline">{traceCount.toLocaleString("en-US")} traces</span>
+              <button
+                type="button"
+                onClick={togglePlay}
+                aria-label={playing ? "Pause demo" : "Play demo"}
+                className="inline-flex items-center gap-1.5 rounded-sm border border-line-strong px-2 py-1 text-fg-muted transition-colors duration-150 ease-out hover:bg-raised hover:text-fg"
+              >
+                <PlayIcon playing={playing} />
+                <span aria-hidden>{playing ? "Pause" : "Play"}</span>
+              </button>
+            </span>
           </div>
 
-          {/* Telemetry */}
-          <div className="grid grid-cols-2 gap-px bg-hairline">
-            <Readout k="Algorithm" v={algo} />
-            <Readout k="Chip" v={`${chip} · ${chip === "A" ? "unprotected" : "masked"}`} />
-            <Readout k="Status" v={status} accent />
-            <Readout k="Confidence" v={verdict.confidence.toFixed(2)} />
-          </div>
-        </div>
-
-        {/* Pipeline stepper */}
-        <div className="mt-6 border border-hairline bg-surface p-5 shadow-card">
-          <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-graphite">Testing pipeline</div>
-          <ol className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-2">
-            {STAGES.map((s, i) => {
-              const isVerdict = s.n === "05";
-              const tone = isVerdict ? verdictTone : "border-hairline text-ink";
-              const inner = (
-                <span className={`flex items-center gap-2 border ${tone} px-3 py-2`}>
-                  <span className="font-mono text-xs uppercase tracking-wide">{s.name}</span>
-                  {isVerdict && (
-                    <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase">
-                      {verdict.status === "pending" && (
-                        <span aria-hidden className="h-1.5 w-1.5 animate-pulse rounded-full bg-current" />
-                      )}
-                      {verdictWord}
-                    </span>
-                  )}
-                </span>
-              );
-              return (
-                <li key={s.n} className="flex items-center">
-                  {s.anchor ? (
-                    <a href={`#${s.anchor}`} className="transition-opacity hover:opacity-70">
-                      {inner}
-                    </a>
-                  ) : (
-                    inner
-                  )}
-                  {i < STAGES.length - 1 && (
-                    <span aria-hidden className="mx-1.5 hidden text-graphite sm:inline">→</span>
-                  )}
-                </li>
-              );
-            })}
-          </ol>
-        </div>
-
-        {/* Stage outputs, in pipeline order */}
-        <div className="mt-6">
-          <Screen stage="01" label="Acquire · power & EM trace" meta="400 samples" footer="raw capture, aligned & filtered">
-            <TraceViewer chip={chip} algo={algo} />
-          </Screen>
-        </div>
-
-        <div className="mt-6 grid gap-6 lg:grid-cols-2">
-          <Screen stage="03" label="Analyze · CPA correlation" meta="64 × 96" footer="key-byte hypotheses (y) × time samples (x)">
-            <CpaMatrix chip={chip} traceCount={traceCount} algo={algo} />
-          </Screen>
-
-          <Screen
-            stage="04"
-            label="Localize · EM spatial scan"
-            meta="32 × 24 probe"
-            footer={showBox ? "CV localisation · crypto core flagged" : "scanning · no hotspot"}
-          >
-            <Heatmap chip={chip} traceCount={traceCount} algo={algo} />
-            <div className="mt-4">
-              <div
-                className="h-2 w-full"
-                style={{ background: "linear-gradient(90deg,#180F3E,#7B2382,#D44842,#F6A21E,#FCFFA4)" }}
-              />
-              <div className="mt-1 flex justify-between font-mono text-[10px] text-white/45">
-                <span>low leakage</span>
-                <span>key-bearing signal</span>
-              </div>
-            </div>
-          </Screen>
-        </div>
-
-        {/* Verdict */}
-        <div id="stage-05" className="mt-6 max-w-xl scroll-mt-24">
-          <div className="mb-2 font-mono text-[11px] uppercase tracking-widest text-graphite">Verdict</div>
-          <VerdictPanel chip={chip} traceCount={traceCount} algo={algo} />
-        </div>
-
-        {/* Side-by-side: both algorithms at the current chip & trace count */}
-        <div className="mt-14">
-          <div className="flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.22em] text-graphite">
-            <span aria-hidden className="h-px w-7 bg-uqpurple/70" />
-            Two algorithms, side by side
-          </div>
-          <p className="mt-3 max-w-2xl text-pretty leading-relaxed text-graphite">
-            The same chip and trace count, run against each algorithm. They leak from different regions of
-            the die and recover at different speeds.
-          </p>
-          <div className="mt-6 grid gap-6 md:grid-cols-2">
-            {(["ML-KEM", "ML-DSA"] as Algorithm[]).map((a) => {
-              const v = computeVerdict(chip, traceCount, a);
-              const word = v.status === "leak" ? "key recovered" : v.status === "secure" ? "secure" : "analysing";
-              const tone =
-                v.status === "leak" ? "text-[#D44842]" : v.status === "secure" ? "text-instrument" : "text-white/55";
-              return (
-                <div key={a} className="overflow-hidden border border-ink/15 bg-[#0C1116] shadow-card">
-                  <div className="flex items-center justify-between border-b border-white/10 px-3 py-2 font-mono text-[11px] uppercase tracking-widest text-white/55">
-                    <span>
-                      <span className="text-uqpurple">{a}</span> · {a === "ML-KEM" ? "key exchange" : "signatures"}
-                    </span>
-                    <span className="text-instrument">recovers at {recoveryThreshold(a).toLocaleString()}</span>
-                  </div>
-                  <div className="p-4">
-                    <Heatmap chip={chip} traceCount={traceCount} algo={a} />
-                  </div>
-                  <div className={`border-t border-white/10 px-3 py-2 font-mono text-[10px] uppercase ${tone}`}>
-                    {word} · conf {v.confidence.toFixed(2)}
-                  </div>
+          <div className="lg:grid lg:grid-cols-[18rem_1fr]">
+            {/* Controls + verdict */}
+            <div className="space-y-6 border-b border-line p-5 lg:border-b-0 lg:border-r">
+              <div>
+                <div className="mb-2 font-mono text-[11px] text-fg-subtle">Algorithm</div>
+                <Segmented
+                  label="Select algorithm under test"
+                  value={algo}
+                  onChange={setAlgo}
+                  options={[
+                    ["ML-KEM", "ML-KEM"],
+                    ["ML-DSA", "ML-DSA"],
+                  ]}
+                />
+                <div className="mt-2 text-[13px] text-fg-subtle">
+                  {algo === "ML-KEM" ? "Key encapsulation (Kyber)" : "Digital signatures (Dilithium)"}
                 </div>
-              );
-            })}
+              </div>
+
+              <div>
+                <div className="mb-2 font-mono text-[11px] text-fg-subtle">Chip under test</div>
+                <div role="group" aria-label="Select chip under test" className="grid gap-1">
+                  {CHIPS.map((c) => (
+                    <button
+                      key={c.id}
+                      type="button"
+                      aria-pressed={chip === c.id}
+                      onClick={() => {
+                        setPlaying(false);
+                        setChip(c.id);
+                      }}
+                      className={`flex items-center justify-between rounded-sm border px-3 py-2 text-sm transition-colors duration-150 ease-out ${
+                        chip === c.id ? "border-line-strong bg-lift text-fg" : "border-transparent text-fg-muted hover:text-fg"
+                      }`}
+                    >
+                      <span>Chip {c.id}</span>
+                      <span className="font-mono text-[11px] text-fg-subtle">{c.note}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <label className="block">
+                <div className="flex items-baseline justify-between">
+                  <span className="font-mono text-[11px] text-fg-subtle">Traces captured</span>
+                  <span className="font-mono text-base text-fg">{traceCount.toLocaleString("en-US")}</span>
+                </div>
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={pos}
+                  onChange={(e) => {
+                    setPlaying(false);
+                    setPos(Number(e.target.value));
+                  }}
+                  aria-label="Traces captured"
+                  className="mt-3 w-full accent-accent"
+                />
+                <div className="mt-1 flex justify-between font-mono text-[11px] text-fg-subtle">
+                  <span>1</span>
+                  <span>1,000,000</span>
+                </div>
+              </label>
+
+              <div id="stage-05" className="scroll-mt-24">
+                <VerdictPanel chip={chip} traceCount={traceCount} algo={algo} />
+              </div>
+            </div>
+
+            {/* Stage outputs, in pipeline order */}
+            <div className="space-y-3 p-3 md:p-4">
+              <ol aria-label="Testing pipeline" className="flex flex-wrap items-center gap-1.5">
+                {STAGES.map((s, i) => {
+                  const isVerdict = s.n === "05";
+                  const tone =
+                    isVerdict && verdict.status === "leak"
+                      ? "border-accent/40 text-accent"
+                      : "border-line-strong text-fg-muted";
+                  const inner = (
+                    <span className={`flex items-center gap-2 rounded-sm border px-2.5 py-1 text-[13px] ${tone}`}>
+                      <span>{s.name}</span>
+                      {isVerdict && <span className="font-mono text-[11px]">{wordFor(verdict.status)}</span>}
+                    </span>
+                  );
+                  return (
+                    <li key={s.n} className="flex items-center">
+                      {s.anchor ? (
+                        <a href={`#${s.anchor}`} className="transition-opacity hover:opacity-80">
+                          {inner}
+                        </a>
+                      ) : (
+                        inner
+                      )}
+                      {i < STAGES.length - 1 && (
+                        <span aria-hidden className="mx-1 hidden text-fg-subtle sm:inline">
+                          →
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ol>
+
+              <Screen stage="01" label="Acquire · power & EM trace" meta="400 samples" footer="raw capture, aligned & filtered">
+                <TraceViewer chip={chip} algo={algo} />
+              </Screen>
+
+              <div className="grid gap-3 xl:grid-cols-2">
+                <Screen
+                  stage="03"
+                  label="Analyze · CPA correlation"
+                  meta="64 × 96"
+                  footer="key-byte hypotheses (y) × time samples (x)"
+                >
+                  <CpaMatrix chip={chip} traceCount={traceCount} algo={algo} />
+                </Screen>
+
+                <Screen
+                  stage="04"
+                  label="Localize · EM spatial scan"
+                  meta="32 × 24 probe"
+                  footer={showBox ? "CV localisation · crypto core flagged" : "scanning · no hotspot"}
+                >
+                  <Heatmap chip={chip} traceCount={traceCount} algo={algo} />
+                  <div className="mt-3">
+                    <div className="h-1.5 w-full rounded-full" style={{ background: LEGEND }} />
+                    <div className="mt-1 flex justify-between font-mono text-[11px] text-fg-subtle">
+                      <span>low leakage</span>
+                      <span>key-bearing signal</span>
+                    </div>
+                  </div>
+                </Screen>
+              </div>
+            </div>
           </div>
         </div>
-      </Container>
+      </Section>
+
+      <Section
+        title="Why the masked chip holds"
+        intro="Masking doesn’t hide the chip; it breaks the link between each measurement and the secret. It raises the bar rather than closing the door — higher-order attacks combine several points of a trace — which is why a countermeasure is judged by repeating the attack before and after it is enabled."
+      >
+        <MaskingFigure />
+      </Section>
+
+      <Section
+        title="Two algorithms, side by side"
+        intro="The same chip and trace count, run against each algorithm. They leak from different regions of the chip and recover at different speeds."
+      >
+        <div className="grid gap-3 md:grid-cols-2">
+          {(["ML-KEM", "ML-DSA"] as Algorithm[]).map((a) => {
+            const v = computeVerdict(chip, traceCount, a);
+            const tone = v.status === "leak" ? "text-accent" : v.status === "secure" ? "text-fg" : "text-fg-subtle";
+            return (
+              <div key={a} className="overflow-hidden rounded-lg border border-line bg-panel">
+                <div className="flex items-center justify-between border-b border-line px-4 py-2.5 font-mono text-[11px] text-fg-subtle">
+                  <span>
+                    <span className="text-fg">{a}</span> · {a === "ML-KEM" ? "key exchange" : "signatures"}
+                  </span>
+                  <span>recovers at {recoveryThreshold(a).toLocaleString("en-US")}</span>
+                </div>
+                <div className="p-4">
+                  <Heatmap chip={chip} traceCount={traceCount} algo={a} />
+                </div>
+                <div className={`border-t border-line px-4 py-2.5 font-mono text-[11px] ${tone}`}>
+                  {wordFor(v.status)} · conf {v.confidence.toFixed(2)}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </Section>
     </main>
   );
 }

@@ -11,4 +11,14 @@ describe("Problem page", () => {
     render(<Problem />);
     expect(screen.getByRole("heading", { name: /side channels/i })).toBeInTheDocument();
   });
+  it("covers fault injection as well as side channels", () => {
+    render(<Problem />);
+    expect(screen.getByRole("heading", { name: /fault/i })).toBeInTheDocument();
+  });
+  it("walks through ineffective fault analysis step by step", () => {
+    render(<Problem />);
+    const figure = screen.getByRole("figure", { name: /ineffective fault analysis/i });
+    expect(figure).toHaveTextContent(/success/i);
+    expect(figure).toHaveTextContent(/failure/i);
+  });
 });

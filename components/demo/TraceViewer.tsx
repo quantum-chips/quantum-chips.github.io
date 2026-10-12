@@ -24,13 +24,13 @@ export default function TraceViewer({ chip, algo = "ML-KEM" }: { chip: ChipId; a
         ))}
       </g>
       <line x1={0} y1={H / 2} x2={W} y2={H / 2} stroke="#FFFFFF" strokeOpacity="0.12" />
-      <polyline points={pts} fill="none" stroke="#0E7C86" strokeWidth={1.3} />
+      <polyline points={pts} fill="none" stroke="#9CA3AF" strokeWidth={1.3} />
       {t.annotations.map((a) => {
         const x = (a.sample / (t.samples.length - 1)) * W;
         return (
           <g key={a.sample}>
-            <line x1={x} y1={0} x2={x} y2={H} stroke="#FCFFA4" strokeOpacity={0.35} strokeDasharray="2 3" />
-            <text x={x + 3} y={13} fontSize="9" fill="#FCFFA4" className="font-mono">
+            <line x1={x} y1={0} x2={x} y2={H} stroke="#F7F8F8" strokeOpacity={0.22} strokeDasharray="2 3" />
+            <text x={x + 3} y={13} fontSize="9" fill="#7F8691" className="font-mono">
               {a.label}
             </text>
           </g>

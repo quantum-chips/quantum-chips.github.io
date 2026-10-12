@@ -1,132 +1,77 @@
-import Link from "next/link";
-import Container from "@/components/Container";
-import Eyebrow from "@/components/Eyebrow";
-import HeroVisual from "@/components/HeroVisual";
-import { HERO, PLAIN, BENEFICIARIES, MODULES, IMPACT } from "@/content/site";
+import Hero from "@/components/Hero";
+import Section from "@/components/Section";
+import StackVisual from "@/components/StackVisual";
+import ButtonLink from "@/components/ButtonLink";
+import TextLink from "@/components/TextLink";
+import { HERO, PLAIN, BENEFICIARIES, IMPACT } from "@/content/site";
 import { PROJECT } from "@/content/project";
 
 export default function Home() {
   return (
     <main>
-      <section className="relative overflow-hidden border-b border-hairline">
-        <div
-          className="graph-paper absolute inset-0 opacity-30 [mask-image:radial-gradient(120%_90%_at_70%_30%,#000,transparent)]"
-          aria-hidden
-        />
-        <Container className="relative grid items-center gap-12 py-16 md:grid-cols-[1.05fr_0.95fr] md:py-36">
-          <div>
-            <Eyebrow>{HERO.eyebrow}</Eyebrow>
-            <h1 className="mt-5 text-balance font-display text-4xl font-bold leading-[1.1] tracking-tight md:text-5xl">
-              {HERO.title}
-            </h1>
-            <p className="mt-6 max-w-md text-pretty text-lg leading-relaxed text-graphite">{HERO.lede}</p>
-            <Link
-              href={HERO.cta.href}
-              className="group mt-8 inline-flex items-center gap-2.5 border border-instrument px-6 py-3 font-mono text-sm text-instrument transition-colors duration-200 hover:bg-instrument hover:text-paper"
-            >
-              {HERO.cta.label}
-              <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-            </Link>
-          </div>
-          <figure className="m-0">
-            <div className="border border-hairline bg-surface p-3 shadow-card">
-              <HeroVisual />
-            </div>
-            <figcaption className="mt-3 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.2em] text-graphite">
-              <span>Fig.01 — lattice / EM sweep</span>
-              <span className="flex items-center gap-1.5 text-instrument">
-                <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-instrument" />
-                live
-              </span>
-            </figcaption>
-          </figure>
-        </Container>
-      </section>
+      <Hero
+        pill={HERO.eyebrow}
+        title={HERO.title}
+        lede={HERO.lede}
+        actions={
+          <>
+            <ButtonLink href={HERO.cta.href}>
+              {HERO.cta.label} <span aria-hidden>→</span>
+            </ButtonLink>
+            <ButtonLink href={IMPACT.cta.href} variant="secondary">
+              {IMPACT.cta.label}
+            </ButtonLink>
+          </>
+        }
+      >
+        <StackVisual />
+      </Hero>
 
-      <Container className="py-20">
-        <Eyebrow>About the project</Eyebrow>
-        <h2 className="mt-5 max-w-3xl text-balance font-display text-2xl font-semibold leading-snug tracking-tight">
-          {PROJECT.fullTitle}
-        </h2>
-        <p className="mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-graphite">{PROJECT.mission}</p>
-        <dl className="mt-8 grid gap-px overflow-hidden border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">
+      <Section id="about" title={PROJECT.fullTitle} intro={PROJECT.mission}>
+        {/* gap-px over a hairline-coloured ground draws the grid rules. */}
+        <dl className="grid gap-px overflow-hidden rounded-lg border border-line-strong bg-line-strong sm:grid-cols-2 lg:grid-cols-3">
           {PROJECT.facts.map((f) => (
-            <div key={f.k} className="bg-surface p-5">
-              <dt className="font-mono text-[10px] uppercase tracking-widest text-uqpurple">{f.k}</dt>
-              <dd className="mt-1 text-sm leading-snug text-ink">{f.v}</dd>
+            <div key={f.k} className="bg-ground p-5">
+              <dt className="font-mono text-xs text-fg-subtle">{f.k}</dt>
+              <dd className="mt-1.5 text-[15px] leading-snug text-fg">{f.v}</dd>
             </div>
           ))}
         </dl>
-        <p className="mt-6 max-w-2xl text-pretty leading-relaxed text-graphite">{PROJECT.moduleNote}</p>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-graphite">{PROJECT.funding}</p>
-      </Container>
+        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-fg-subtle">{PROJECT.funding}</p>
+        <div className="mt-10 flex flex-col gap-3 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <p className="max-w-2xl leading-relaxed text-fg-muted">{PROJECT.moduleNote}</p>
+          <TextLink href="/chip-testing/">Chip Security Testing</TextLink>
+        </div>
+      </Section>
 
-      <Container className="py-20">
-        <Eyebrow>Modules</Eyebrow>
-        <p className="mt-5 max-w-2xl text-pretty leading-relaxed text-graphite">
-          The project spans the stack from silicon to applications, delivered with its partners. This
-          site presents the hardware module.
+      <Section title={PLAIN.heading}>
+        <p className="max-w-3xl text-[clamp(1.25rem,2.4vw,1.625rem)] leading-snug tracking-[-0.01em] text-fg-subtle">
+          {PLAIN.lines.join(" ")} <span className="text-fg">{PLAIN.close}</span>
         </p>
-        <div className="mt-8 grid gap-5">
-          {MODULES.map((m) => (
-            <Link
-              key={m.href}
-              href={m.href}
-              className="group border border-hairline/70 bg-surface p-6 shadow-card transition-shadow duration-300 hover:shadow-none"
-            >
-              <div className="font-mono text-[10px] uppercase tracking-widest text-uqpurple">{m.tag}</div>
-              <div className="mt-2 flex items-center justify-between font-display text-xl font-semibold tracking-tight">
-                {m.name}
-                <span
-                  aria-hidden
-                  className="font-mono text-instrument transition-transform duration-200 group-hover:translate-x-1"
-                >
-                  →
-                </span>
-              </div>
-              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-graphite">{m.desc}</p>
-            </Link>
+        <ul className="mt-10 flex flex-wrap gap-2" aria-label="Who depends on it">
+          {BENEFICIARIES.map((b) => (
+            <li key={b} className="rounded-full border border-line-strong px-3 py-1 font-mono text-xs text-fg-muted">
+              {b}
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section title="Impact & outcomes" intro={IMPACT.lede}>
+        <div className="grid gap-3 md:grid-cols-3">
+          {IMPACT.outcomes.map((o) => (
+            <div key={o.title} className="rounded-lg border border-line bg-panel p-6">
+              <h3 className="text-base font-medium text-fg">{o.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-fg-muted">{o.body}</p>
+            </div>
           ))}
         </div>
-      </Container>
-
-      <Container className="py-20">
-        <div className="border-l-2 border-uqpurple bg-surface p-8 shadow-card md:p-10">
-          <div className="font-mono text-xs uppercase tracking-[0.2em] text-uqpurple">{PLAIN.heading}</div>
-          <p className="mt-4 max-w-3xl text-pretty text-lg leading-relaxed text-ink">{PLAIN.body}</p>
-          <div className="mt-6 flex flex-wrap gap-2">
-            {BENEFICIARIES.map((b) => (
-              <span key={b} className="border border-hairline bg-paper px-3 py-1 font-mono text-xs text-graphite">
-                {b}
-              </span>
-            ))}
-          </div>
+        <div className="mt-10">
+          <ButtonLink href={IMPACT.cta.href}>
+            {IMPACT.cta.label} <span aria-hidden>→</span>
+          </ButtonLink>
         </div>
-      </Container>
-
-      <section className="border-t border-hairline bg-surface">
-        <Container className="py-24">
-          <Eyebrow index="04">Impact &amp; outcomes</Eyebrow>
-          <p className="mt-6 max-w-3xl text-pretty font-display text-2xl font-semibold leading-snug tracking-tight text-ink">
-            {IMPACT.lede}
-          </p>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2">
-            {IMPACT.outcomes.map((o) => (
-              <div key={o.title} className="border border-hairline/70 bg-paper p-6 shadow-card">
-                <h3 className="font-display text-lg font-semibold tracking-tight">{o.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-graphite">{o.body}</p>
-              </div>
-            ))}
-          </div>
-          <Link
-            href={IMPACT.cta.href}
-            className="group mt-10 inline-flex items-center gap-2.5 border border-instrument px-6 py-3 font-mono text-sm text-instrument transition-colors duration-200 hover:bg-instrument hover:text-paper"
-          >
-            {IMPACT.cta.label}
-            <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-          </Link>
-        </Container>
-      </section>
+      </Section>
     </main>
   );
 }

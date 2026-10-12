@@ -10,4 +10,4 @@ export const BASE_PATH = (() => {
 
 export const SITE_NAME = "Transitioning to Quantum-Safe";
 export const SITE_DESCRIPTION =
-  "A University of Queensland–led QDSA defence research project: security testing of post-quantum cryptography in security-critical applications. This module covers side-channel security testing of quantum-safe chips.";
+  "A University of Queensland–led QDSA defence research project: security testing of post-quantum cryptography in security-critical applications. This module covers side-channel and fault-injection testing of quantum-safe chips.";

@@ -12,4 +12,8 @@ describe("Home", () => {
     render(<Home />);
     expect(screen.getByRole("link", { name: /chip security testing/i })).toBeInTheDocument();
   });
+  it("names the sectors that benefit only once", () => {
+    render(<Home />);
+    expect(screen.getAllByText(/healthcare/i)).toHaveLength(1);
+  });
 });

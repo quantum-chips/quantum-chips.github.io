@@ -1,7 +1,6 @@
-import { Space_Grotesk, Source_Serif_4, IBM_Plex_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 
-const display = Space_Grotesk({ subsets: ["latin"], variable: "--font-display", display: "swap" });
-const body = Source_Serif_4({ subsets: ["latin"], variable: "--font-body", display: "swap" });
-const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
+const sans = Geist({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-sans", display: "swap" });
+const mono = Geist_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
 
-export const fontVars = `${display.variable} ${body.variable} ${mono.variable}`;
+export const fontVars = `${sans.variable} ${mono.variable}`;

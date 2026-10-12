@@ -56,11 +56,11 @@ export default function Heatmap({
             width={core.w * CELL}
             height={core.h * CELL}
             fill="none"
-            stroke="#FCFFA4"
+            stroke="#F7F8F8"
             strokeWidth={2}
             strokeDasharray="4 3"
           />
-          <text x={core.x * CELL} y={core.y * CELL - 4} fill="#FCFFA4" className="font-mono" fontSize="11">
+          <text x={core.x * CELL} y={core.y * CELL - 4} fill="#F7F8F8" className="font-mono" fontSize="11">
             LEAK · crypto core · {verdict.confidence.toFixed(2)}
           </text>
         </svg>
